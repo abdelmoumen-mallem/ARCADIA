@@ -1,0 +1,14 @@
+{
+    "name": "abdel/arcadia",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "Src/"        }
+    },
+    "authors": [
+        {
+            "name": "abdelmoumen-mallem",
+            "email": "abdelmoumen.mallem@gmail.com"
+        }
+    ],
+    "require": {}
+}

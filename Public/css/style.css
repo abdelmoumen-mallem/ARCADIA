@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400;1,700&family=Prata&display=swap');
+
+body {
+    font-family: "Economica", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.navbar-nav {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link,
+.d-flex .nav-link {
+    font-size: 1.25rem;
+    padding: 15px 20px;
+    margin-right: 20px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover,
+.d-flex .nav-link:hover {
+    background-color: #f0f0f0;
+    color: #0056b3;
+}
+
+.itemActive {
+    color: #0056b3;
+}
+
+.fond-vert {
+    background-image: url('../img/fond_vert.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 50px;
+    border-radius: 150px;
+}
+
+.rectangle {
+    border: 2px solid #000;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.carousel-item img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.containerFeuille {
+    bottom: 100px;
+    position: absolute; 
+    height: 50vh; 
+}
+
+.feuilleDouble {
+    position: sticky; 
+    top: 10px;  
+    width: 100px;
+    height: auto; 
+    z-index: 10; 
+}
+
+.containerFeuille1 {
+    bottom: 100px;
+    position: absolute; 
+    height: 50vh; 
+}
+
+.feuilleDouble1 {
+    position: sticky; 
+    top: 10px;  
+    width: 100px; 
+    height: auto; 
+    z-index: 10; 
+    transform: scaleX(-1) rotate(45deg);
+}
+
+.sectionAbs{
+    position: relative;
+}
+
+.footer {
+    background-color: #333; 
+    color: #fff; 
+}
+
+.footer a.text-white:hover {
+    color: #ddd; 
+}
+
+.footer h5 {
+    margin-bottom: 20px;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0;
+    cursor: pointer; 
+}
