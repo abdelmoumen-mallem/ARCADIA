@@ -48,7 +48,7 @@
 
     <!-- Habitats -->
     <section class="row d-flex align-items-center mt-5 mb-5 sectionAbs">
-        <div class="containerFeuille">
+        <div class="containerFeuille d-none d-md-block">
             <img class="feuilleDouble" src="https://cdn-images.zoobeauval.com/BZBAj9txWh8gNamnhQL_dn3gNw4=/377x713/https%3A%2F%2Fs3.eu-west-3.amazonaws.com%2Fassets.zoobeauval.com%2F2024%2F5%2Fstatic%2Fleaves%2Fhome-leaf-left.7f147c76.webp" alt="">
         </div>
         <h1 class="text-center">Des habitats naturels <i class="bi bi-house-check"></i></h1>
@@ -97,7 +97,7 @@
 
     <!-- Animaux -->
     <section class="row d-flex align-items-center mt-5 mb-5 sectionAbs">
-        <div class="containerFeuille1 text-end">
+        <div class="containerFeuille1 text-end d-none d-md-block">
             <img class="feuilleDouble1" src="https://cdn-images.zoobeauval.com/BZBAj9txWh8gNamnhQL_dn3gNw4=/377x713/https%3A%2F%2Fs3.eu-west-3.amazonaws.com%2Fassets.zoobeauval.com%2F2024%2F5%2Fstatic%2Fleaves%2Fhome-leaf-left.7f147c76.webp" alt="">
         </div>
 
