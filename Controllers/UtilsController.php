@@ -6,9 +6,4 @@ class UtilsController
     {
         return $_SERVER['REQUEST_URI'] === $uri ? ' itemActive' : '';
     }
-
-    public function test()
-    {
-        return 'ok';
-    }
 }

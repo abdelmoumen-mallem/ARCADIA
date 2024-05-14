@@ -21,14 +21,4 @@ class PageController
     {
         require_once '../Views/pages/contacts.php';
     }
-
-    private function isActive($uri)
-    {
-        return $_SERVER['REQUEST_URI'] === $uri ? ' itemActive' : '';
-    }
-
-    private function test()
-    {
-        return 'ok';
-    }
 }

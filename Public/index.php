@@ -1,12 +1,9 @@
 <?php
 
-
-use Src\Models\Router;
-
 // Inclusion du fichier du routeur et des contrôleurs
-require_once '../Models/routerHandler.php';
+require_once '../Router/routerHandler.php';
 require_once '../Controllers/PageController.php';
-require_once '../Models/Router.php';
+require_once '../Router/Router.php';
 
 // Instanciation de la classe Router
 $router = new Router();

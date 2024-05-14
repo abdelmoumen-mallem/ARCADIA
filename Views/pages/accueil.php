@@ -16,7 +16,10 @@
         <p>
             Le Zoo Arcadia est un magnifique parc zoologique situé en France, près de la forêt de Brocéliande en Bretagne, depuis 1960.
             Nous sommes fiers de vous accueillir dans notre zoo où vous pourrez découvrir une grande diversité d'animaux répartis dans différents habitats.
-            Engagé dans la protection de l'environnement et la préservation des espèces, le Zoo Arcadia fonctionne de manière entièrement autonome en termes d'énergie, utilisant des sources renouvelables pour minimiser notre impact sur la planète. Chaque aspect de notre gestion quotidienne, de la santé animale aux systèmes d'alimentation, est conçu pour être durable et respectueux de l'environnement. Rejoignez-nous pour une expérience où vous pourrez non seulement admirer la beauté naturelle de notre faune mais aussi apprendre l'importance de la conservation écologique dans un cadre inspirant et éducatif.
+            Engagé dans la protection de l'environnement et la préservation des espèces, le Zoo Arcadia fonctionne de manière entièrement autonome en termes d'énergie, utilisant des sources renouvelables pour minimiser notre impact sur la planète.
+        </p>
+        <p class="d-none d-md-block">
+            Chaque aspect de notre gestion quotidienne, de la santé animale aux systèmes d'alimentation, est conçu pour être durable et respectueux de l'environnement. Rejoignez-nous pour une expérience où vous pourrez non seulement admirer la beauté naturelle de notre faune mais aussi apprendre l'importance de la conservation écologique dans un cadre inspirant et éducatif.
         </p>
     </section>
 
@@ -43,8 +46,6 @@
             </button>
         </div>
     </section><br><br>
-
-
 
     <!-- Habitats -->
     <section class="row d-flex align-items-center mt-5 mb-5 sectionAbs">
@@ -116,7 +117,7 @@
             <ul class="list-group list-group-square">
                 <li class="list-group-item mt-2 mb-2">Savane: Rencontrez nos lions, girafes et éléphants qui errent dans un espace qui imite leur habitat naturel africain.</li>
                 <li class="list-group-item mt-2">Jungle: Plongez dans un monde de verdure dense où vivent des jaguars, des singes araignées, et une multitude d'oiseaux tropicaux.</li>
-                <li class="list-group-item mt-2">Marais: Explorez un écosystème humide peuplé par des crocodiles, des loutres et des oiseaux.</li>
+                <li class="list-group-item mt-2">Marais: Explorez un écosystème humide peuplé par des crocodiles, des loutres et des hippopotames.</li>
             </ul>
         </div>
     </section>
