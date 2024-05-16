@@ -6,9 +6,6 @@ try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASSWORD);
     // Configuration des attributs PDO pour afficher les erreurs et activer le mode d'exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Vous pouvez utiliser $pdo pour exécuter des requêtes SQL ou effectuer d'autres opérations sur la base de données
-
 } catch (PDOException $e) {
     // En cas d'erreur lors de la connexion, affichage du message d'erreur
     echo "Erreur de connexion : " . $e->getMessage();

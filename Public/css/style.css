@@ -120,6 +120,55 @@ body {
 }
 
 .animal {
-    width: 100px; 
-    height: 100px;
+    width: 8em; 
+    height: 8em;
+}
+
+.login-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 50%;
+    text-align: center;
+}
+
+.login-card h1 {
+    color: #333;
+}
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-card input {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-card button {
+    background-color: #5C67F2;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100px;
+}
+
+.login-card button:hover {
+    background-color: #4a54f1;
+}
+
+.help-text {
+    margin-top: 20px;
+}
+
+.help-text a {
+    color: #6a7bfd;
+    text-decoration: none;
 }

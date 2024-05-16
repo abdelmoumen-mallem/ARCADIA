@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS habitats (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
     image_url VARCHAR(255) NOT NULL,
+    commentaire TEXT NULL,
     description TEXT NOT NULL
 );
 
@@ -46,10 +47,32 @@ CREATE TABLE IF NOT EXISTS animaux (
 
 CREATE TABLE IF NOT EXISTS rapports_veterinaires (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
+    etat VARCHAR(50) NOT NULL,
+    nouriture VARCHAR(50) NOT NULL,
+    grammage FLOAT NOT NULL,
     animal_id INT NOT NULL,
     utilisateur_id INT NOT NULL,
+    date_creation DATE NOT NULL DEFAULT CURDATE(),
+    CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
+    CONSTRAINT fk_utilisateur_id FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id) ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS statistiques_animaux (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    animal_id INT NOT NULL,
+    statistique INT NOT NULL,
+    date_creation DATE NOT NULL DEFAULT CURDATE(),
+    CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
+);
+
+CREATE TABLE IF NOT EXISTS consommations_animaux (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nouriture VARCHAR(50) NOT NULL,
+    grammage FLOAT NOT NULL,
+    animal_id INT NOT NULL,
+    utilisateur_id INT NOT NULL,
+    date_creation DATE NOT NULL DEFAULT CURDATE(),
     CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
     CONSTRAINT fk_utilisateur_id FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id) ON DELETE RESTRICT
 );
@@ -60,3 +83,25 @@ CREATE TABLE IF NOT EXISTS avis (
     description TEXT NOT NULL,
     visible TINYINT NOT NULL DEFAULT 0
 );
+
+INSERT INTO
+    roles (nom)
+VALUES ('Administrateur'),
+    ('Employé'),
+    ('Vétérinaire');
+
+INSERT INTO
+    utilisateurs (
+        username,
+        password,
+        nom,
+        prenom,
+        role_id
+    )
+VALUES (
+        'abdelmoumen.mallem@gmail.com',
+        'Skanes',
+        'Garcia',
+        'José',
+        1
+    );

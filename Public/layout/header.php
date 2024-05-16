@@ -42,7 +42,7 @@ $utilController = new UtilsController();
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a class="nav-link" href="#">Connexion</a>
+                    <a class="nav-link" href="/connexion">Connexion</a>
                 </div>
             </div>
         </div>

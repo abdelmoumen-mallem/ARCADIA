@@ -21,4 +21,19 @@ class PageController
     {
         require_once '../Views/pages/contacts.php';
     }
+
+    public function connexion()
+    {
+        require_once '../Views/pages/connexion.php';
+    }
+
+    public function error404()
+    {
+        require_once '../Views/errorPage/error404.php';
+    }
+
+    public function test()
+    {
+        require_once '../Views/users/test.php';
+    }
 }

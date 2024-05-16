@@ -13,7 +13,8 @@ function handleRoute($router)
     // Vérification si un gestionnaire de route a été trouvé
     if ($handler == null) {
         // Si aucun gestionnaire de route n'a été trouvé, renvoyer une erreur 404
-        header('HTTP/1.1 404 Not Found');
+        //header('HTTP/1.1 404 Not Found');
+        header("Location: /error");
         exit();
     }
 
