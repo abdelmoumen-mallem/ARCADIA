@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     password VARCHAR(50) NOT NULL,
     nom VARCHAR(50) NOT NULL,
     prenom VARCHAR(50) NOT NULL,
+    statut TINYINT NOT NULL DEFAULT 1,
     role_id INT NOT NULL,
     date_creation DATE NOT NULL DEFAULT CURDATE(),
     CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE RESTRICT
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS habitats (
 CREATE TABLE IF NOT EXISTS animaux (
     id INT AUTO_INCREMENT PRIMARY KEY,
     prenom VARCHAR(50) NOT NULL,
+    statut TINYINT NOT NULL DEFAULT 1,
     race_id INT NOT NULL,
     habitat_id INT NOT NULL,
     CONSTRAINT fk_race_id FOREIGN KEY (race_id) REFERENCES races (id) ON DELETE RESTRICT,
@@ -63,7 +65,7 @@ CREATE TABLE IF NOT EXISTS statistiques_animaux (
     animal_id INT NOT NULL,
     statistique INT NOT NULL,
     date_creation DATE NOT NULL DEFAULT CURDATE(),
-    CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
+    CONSTRAINT fk_stat_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS consommations_animaux (
@@ -73,8 +75,8 @@ CREATE TABLE IF NOT EXISTS consommations_animaux (
     animal_id INT NOT NULL,
     utilisateur_id INT NOT NULL,
     date_creation DATE NOT NULL DEFAULT CURDATE(),
-    CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
-    CONSTRAINT fk_utilisateur_id FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id) ON DELETE RESTRICT
+    CONSTRAINT fk_cons_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
+    CONSTRAINT fk_cons_utilisateur_id FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id) ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS avis (

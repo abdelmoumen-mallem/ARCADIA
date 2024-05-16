@@ -23,7 +23,11 @@ class UserController
 
             if ($loginSuccessful) {
                 setcookie('user_arcadia', time(), time() + (86400), '/');
-                session_start();
+
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
                 $_SESSION['user_arcadia'] = time();
 
                 header("Location: /test");
@@ -31,18 +35,5 @@ class UserController
                 header("Location: /connexion/error");
             }
         }
-    }
-
-    public function isLogin()
-    {
-        session_start();
-
-        if (isset($_COOKIE['user_arcadia']) && isset($_SESSION['user_arcadia'])) {
-            // Vérifier si les valeurs du cookie et de la session correspondent
-            if ($_COOKIE['user_arcadia'] == $_SESSION['user_arcadia']) {
-                return true; // L'utilisateur est connecté
-            }
-        }
-        return false; // L'utilisateur n'est pas connecté
     }
 }

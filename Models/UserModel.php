@@ -9,7 +9,7 @@ class UserModel extends DatabaseModel
     {
         try {
             // Préparer la requête SQL pour éviter les injections SQL
-            $stmt = $this->pdo->prepare("SELECT id, password FROM utilisateurs WHERE username = :username LIMIT 1");
+            $stmt = $this->pdo->prepare("SELECT * FROM utilisateurs WHERE username = :username LIMIT 1");
 
             // Exécuter la requête avec le paramètre bind
             $stmt->execute(['username' => $username]);
@@ -18,9 +18,12 @@ class UserModel extends DatabaseModel
             $user = $stmt->fetch();
 
             if ($user) {
-                // Vérifier le mot de passe en comparant les valeurs directement
                 if ($password === $user['password']) {
-                    return true;  // Connexion valide
+                    //session_start();
+                    //$_SESSION['id_user_arcadia'] = $user['id'];
+                    $this->idUser($user['id'], $user['username'], $user['nom'], $user['prenom'], $user['role_id'], $user['date_creation'], $user['statut']);
+
+                    return true;
                 }
             }
             return false;  // Échec de la connexion, mauvais username ou password
@@ -28,5 +31,22 @@ class UserModel extends DatabaseModel
             // Gestion des erreurs
             throw new Exception("Erreur lors de la vérification de l'utilisateur: " . $e->getMessage());
         }
+    }
+
+    public function idUser($id, $username, $nom, $prenom, $role_id, $date_creation)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Stocker les informations de l'utilisateur dans la variable de session
+        $_SESSION['id_user_arcadia'] = [
+            'id' => $id,
+            'username' => $username,
+            'nom' => $nom,
+            'prenom' => $prenom,
+            'role_id' => $role_id,
+            'date_creation' => $date_creation
+        ];
     }
 }

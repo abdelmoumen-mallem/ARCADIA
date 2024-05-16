@@ -4,6 +4,7 @@
 require_once '../Router/routerHandler.php';
 require_once '../Controllers/PageController.php';
 require_once '../Controllers/UserController.php';
+require_once '../Middleware/AuthMiddleware.php';
 
 require_once '../Router/Router.php';
 
@@ -18,16 +19,23 @@ $router->addRoute('GET', '/habitats', 'PageController', 'habitats');
 $router->addRoute('GET', '/connexion', 'PageController', 'connexion');
 $router->addRoute('GET', '/connexion/{id}', 'PageController', 'connexion');
 $router->addRoute('GET', '/error', 'PageController', 'error404');
-
-$router->addRoute('GET', '/test', 'PageController', 'test');
-
-
-
 $router->addRoute('POST', '/connexion', 'UserController', 'login');
 
-// Routes soumis a connexion utilisateur
+// Route soumis a authentification utilisateur
+if (middleware_auth()) {
+    $router->addRoute('GET', '/test', 'PageController', 'test');
 
-
+    $router->addRoute('GET', '/accueil_admin', 'PageController', 'accueil_admin');
+    $router->addRoute('GET', '/collaborateurs_admin', 'PageController', 'collaborateurs_admin');
+    $router->addRoute('GET', '/services_admin', 'PageController', 'services_admin');
+    $router->addRoute('GET', '/habitats_admin', 'PageController', 'habitats_admin');
+    $router->addRoute('GET', '/animaux_admin', 'PageController', 'animaux_admin');
+    $router->addRoute('GET', '/horaires_admin', 'PageController', 'horaires_admin');
+    $router->addRoute('GET', '/compte_rendu_admin', 'PageController', 'compte_rendu_admin');
+    $router->addRoute('GET', '/consommation_animaux_admin', 'PageController', 'consommation_animaux_admin');
+    $router->addRoute('GET', '/avis_admin', 'PageController', 'avis_admin');
+    $router->addRoute('GET', '/contacts_admin', 'PageController', 'contacts_admin');
+}
 
 // Appel de la fonction handleRoute pour gérer les routes
 handleRoute($router);
