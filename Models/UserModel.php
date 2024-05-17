@@ -33,7 +33,7 @@ class UserModel extends DatabaseModel
         }
     }
 
-    public function idUser($id, $username, $nom, $prenom, $role_id, $date_creation)
+    public function idUser($id, $username, $nom, $prenom, $role_id, $date_creation, $statut)
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -46,7 +46,8 @@ class UserModel extends DatabaseModel
             'nom' => $nom,
             'prenom' => $prenom,
             'role_id' => $role_id,
-            'date_creation' => $date_creation
+            'date_creation' => $date_creation,
+            'statut' => $statut
         ];
     }
 }

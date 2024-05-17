@@ -86,4 +86,9 @@ class PageController
     {
         require_once '../Views/users/contacts_admin.php';
     }
+
+    public function roles_admin()
+    {
+        require_once '../Views/users/roles_admin.php';
+    }
 }

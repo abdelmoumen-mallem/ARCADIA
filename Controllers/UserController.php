@@ -30,7 +30,7 @@ class UserController
 
                 $_SESSION['user_arcadia'] = time();
 
-                header("Location: /test");
+                header("Location: /accueil_admin");
             } else {
                 header("Location: /connexion/error");
             }

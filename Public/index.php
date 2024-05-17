@@ -4,7 +4,10 @@
 require_once '../Router/routerHandler.php';
 require_once '../Controllers/PageController.php';
 require_once '../Controllers/UserController.php';
+require_once '../Controllers/CollaborateursController.php';
+
 require_once '../Middleware/AuthMiddleware.php';
+
 
 require_once '../Router/Router.php';
 
@@ -23,8 +26,6 @@ $router->addRoute('POST', '/connexion', 'UserController', 'login');
 
 // Route soumis a authentification utilisateur
 if (middleware_auth()) {
-    $router->addRoute('GET', '/test', 'PageController', 'test');
-
     $router->addRoute('GET', '/accueil_admin', 'PageController', 'accueil_admin');
     $router->addRoute('GET', '/collaborateurs_admin', 'PageController', 'collaborateurs_admin');
     $router->addRoute('GET', '/services_admin', 'PageController', 'services_admin');
@@ -35,6 +36,9 @@ if (middleware_auth()) {
     $router->addRoute('GET', '/consommation_animaux_admin', 'PageController', 'consommation_animaux_admin');
     $router->addRoute('GET', '/avis_admin', 'PageController', 'avis_admin');
     $router->addRoute('GET', '/contacts_admin', 'PageController', 'contacts_admin');
+    $router->addRoute('GET', '/roles_admin', 'PageController', 'roles_admin');
+
+    $router->addRoute('POST', '/data', 'CollaborateursController', 'show');
 }
 
 // Appel de la fonction handleRoute pour gérer les routes
