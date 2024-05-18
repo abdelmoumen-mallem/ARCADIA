@@ -91,4 +91,9 @@ class PageController
     {
         require_once '../Views/users/roles_admin.php';
     }
+
+    public function creationPassword()
+    {
+        require_once '../Views/pages/creationPassword.php';
+    }
 }

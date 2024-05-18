@@ -36,4 +36,16 @@ class UserController
             }
         }
     }
+
+    public function logout()
+    {
+        unset($_SESSION['user_arcadia']);
+
+        setcookie('user_arcadia', '', time() - 3600, '/');
+
+        unset($_SESSION['id_user_arcadia']);
+
+        header("Location: /connexion");
+        exit();
+    }
 }

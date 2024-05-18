@@ -10,18 +10,23 @@ require_once '../Controllers/RolesController.php';
 $rolesController = new RolesController();
 $roles = $rolesController->index();
 
-
 ?>
 
 
 
 
 <div class="container mt-4">
-    <h2>Collaborateurs</h2>
+    <div class="row">
+        <div class="col-6">
+            <h2>Collaborateurs</h2>
+        </div>
+        <div class="col-6 text-end">
+            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" onclick="Collaborateurs.actionCollaborateurs('Creation','/collaborateurs_admin_insert')">Ajouter un collaborateur <i class="bi bi-plus-square"></i></div>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Email</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Prénom</th>
@@ -30,12 +35,12 @@ $roles = $rolesController->index();
                 <th scope="col">Date de création</th>
                 <th scope="col" class="text-center">Modifier</th>
                 <th scope="col" class="text-center">Supprimer</th>
+                <th scope="col" class="text-center">Password</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($collaborateurs as $collaborateur) : ?>
                 <tr>
-                    <th scope="row"><?= $collaborateur['id'] ?></th>
                     <td><?= $collaborateur['username'] ?></td>
                     <td><?= $collaborateur['nom'] ?></td>
                     <td><?= $collaborateur['prenom'] ?></td>
@@ -50,18 +55,19 @@ $roles = $rolesController->index();
                     <td><?= $collaborateur['date_creation'] ?></td>
                     <td class="text-center">
                         <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
-                            <?php if ($_SESSION['id_user_arcadia']['id'] === $collaborateur['id']) { ?>
-                                <i class="bi bi-pencil btn btn-warning" onclick="General.fetchCollaborateurInfo(<?= $collaborateur['id'] ?>, '/data')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
-                            <?php } ?>
+                            <i class="bi bi-pencil btn btn-warning" onclick="Collaborateurs.fetchCollaborateurInfo(<?= $collaborateur['id'] ?> , '/collaborateurs_admin')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         <?php } ?>
 
                     </td>
                     <td class="text-center">
                         <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
                             <?php if ($_SESSION['id_user_arcadia']['id'] !== 1 || $_SESSION['id_user_arcadia']['id'] !== $collaborateur['id']) { ?>
-                                <i class="bi bi-trash3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                                <i class="bi bi-trash3 btn btn-danger" onclick="Collaborateurs.deleteCollaborateurs(<?= $collaborateur['id'] ?> , '/collaborateurs_admin_delete')"></i>
                             <?php } ?>
                         <?php } ?>
+                    </td>
+                    <td class="text-center">
+                        <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="Collaborateurs.passwordCollaborateurs(<?= $collaborateur['id'] ?>,'<?= $collaborateur['username'] ?>', '<?= $collaborateur['nom'] ?>', '<?= $collaborateur['prenom'] ?>', '/collaborateurs_admin_mail')"></i>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -75,26 +81,29 @@ $roles = $rolesController->index();
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdrop1Label1">Modification</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="staticBackdrop1Label1"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload();"></button>
             </div>
-            <div class="modal-body">
+            <div class=" modal-body">
+
+                <input type="hidden" id="id_collaborateur">
+
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="username" placeholder="Email">
                     <label for="username">Email</label>
                 </div>
 
-                <div class="form-floating">
+                <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nom" placeholder="Nom">
                     <label for="nom">Nom</label>
                 </div>
 
-                <div class="form-floating">
+                <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="prenom" placeholder="Prenom">
                     <label for="prenom">Prenom</label>
                 </div>
 
-                <select name="role" id="role_id" class="form-select" aria-label="role">
+                <select name="role" id="role_id" class="form-select mb-3" aria-label="role">
                     <?php foreach ($roles as $role) : ?>
                         <option value="<?= $role['id'] ?>"><?= $role['nom'] ?></option>
                     <?php endforeach; ?>
@@ -107,10 +116,12 @@ $roles = $rolesController->index();
                     </label>
                 </div>
 
+                <div class=" mt-3" id="msg"></div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary">Valider</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload();">Fermer</button>
+                <button type=" button" class="btn btn-primary" id="validation" data-action="" onclick="Collaborateurs.updateCollaborateur(this.getAttribute('data-action'))">Valider</button>
             </div>
         </div>
     </div>

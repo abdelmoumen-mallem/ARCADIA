@@ -13,8 +13,7 @@
 </head>
 
 <?php
-require_once '../Controllers/UtilsController.php';
-$utilController = new UtilsController();
+require_once '../Utils/utils.php';
 ?>
 
 <body>
@@ -29,16 +28,16 @@ $utilController = new UtilsController();
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/') ?>" href="/">Accueil</a>
+                        <a class="nav-link <?php echo isActive('/') ?>" href="/">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/services') ?>" href="/services">Services</a>
+                        <a class="nav-link <?php echo isActive('/services') ?>" href="/services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/habitats') ?>" href="/habitats">Habitats</a>
+                        <a class="nav-link <?php echo isActive('/habitats') ?>" href="/habitats">Habitats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/contacts') ?>" href="/contacts">Contacts</a>
+                        <a class="nav-link <?php echo isActive('/contacts') ?>" href="/contacts">Contacts</a>
                     </li>
                 </ul>
                 <div class="d-flex">

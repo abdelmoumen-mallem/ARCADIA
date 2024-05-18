@@ -14,6 +14,7 @@ class Router
         // Remplacez les segments dynamiques par des expressions régulières correspondantes
         $path = preg_replace('/\{(\w+)\}/', '(?<$1>[^\/]+)', $path);
 
+
         $this->routes[] = [
             'method' => $method,
             'path' => $path,

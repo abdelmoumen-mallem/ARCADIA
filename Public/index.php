@@ -23,6 +23,9 @@ $router->addRoute('GET', '/connexion', 'PageController', 'connexion');
 $router->addRoute('GET', '/connexion/{id}', 'PageController', 'connexion');
 $router->addRoute('GET', '/error', 'PageController', 'error404');
 $router->addRoute('POST', '/connexion', 'UserController', 'login');
+$router->addRoute('GET', '/creationPassword/{id}', 'PageController', 'creationPassword');
+$router->addRoute('POST', '/creationPassword/{id}', 'CollaborateursController', 'updatePassword');
+
 
 // Route soumis a authentification utilisateur
 if (middleware_auth()) {
@@ -37,8 +40,14 @@ if (middleware_auth()) {
     $router->addRoute('GET', '/avis_admin', 'PageController', 'avis_admin');
     $router->addRoute('GET', '/contacts_admin', 'PageController', 'contacts_admin');
     $router->addRoute('GET', '/roles_admin', 'PageController', 'roles_admin');
+    $router->addRoute('GET', '/deconnexion', 'UserController', 'logout');
 
-    $router->addRoute('POST', '/data', 'CollaborateursController', 'show');
+
+    $router->addRoute('POST', '/collaborateurs_admin', 'CollaborateursController', 'show');
+    $router->addRoute('POST', '/collaborateurs_admin_update', 'CollaborateursController', 'update');
+    $router->addRoute('POST', '/collaborateurs_admin_insert', 'CollaborateursController', 'insert');
+    $router->addRoute('POST', '/collaborateurs_admin_delete', 'CollaborateursController', 'delete');
+    $router->addRoute('POST', '/collaborateurs_admin_mail', 'CollaborateursController', 'sendEmail');
 }
 
 // Appel de la fonction handleRoute pour gérer les routes

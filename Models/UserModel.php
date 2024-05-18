@@ -18,7 +18,7 @@ class UserModel extends DatabaseModel
             $user = $stmt->fetch();
 
             if ($user) {
-                if ($password === $user['password']) {
+                if (password_verify($password, $user['password'])) {
                     //session_start();
                     //$_SESSION['id_user_arcadia'] = $user['id'];
                     $this->idUser($user['id'], $user['username'], $user['nom'], $user['prenom'], $user['role_id'], $user['date_creation'], $user['statut']);

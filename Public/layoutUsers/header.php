@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="../js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../js/Collaborateurs.js"></script>
     <script src="../js/General.js"></script>
+
 </head>
 
 <?php
-require_once '../Controllers/UtilsController.php';
-$utilController = new UtilsController();
+require_once '../Utils/utils.php';
 ?>
 
 <body>
@@ -33,10 +34,7 @@ $utilController = new UtilsController();
 
 
                 <div class="d-flex ms-auto" title="Déconnexion">
-                    <a class="nav-link" href="/deconnexion">
-                        <div class="rounded-bottom-1 bg-primary text-white px-2 py-1"><?= $_SESSION['id_user_arcadia']['prenom'] ?> <i class="bi bi-box-arrow-in-right"></i></div>
-
-                    </a>
+                    <div class="rounded-bottom-1 bg-primary text-white px-2 py-1" onclick="General.logout();"><?= $_SESSION['id_user_arcadia']['prenom'] ?> <i class="bi bi-box-arrow-in-right"></i></div>
                 </div>
             </div>
         </div>
@@ -51,37 +49,37 @@ $utilController = new UtilsController();
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/accueil_admin') ?>" href="/accueil_admin">Accueil</a>
+                        <a class="nav-link <?php echo isActive('/accueil_admin') ?>" href="/accueil_admin">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/collaborateurs_admin') ?>" href="/collaborateurs_admin">Collaborateurs</a>
+                        <a class="nav-link <?php echo isActive('/collaborateurs_admin') ?>" href="/collaborateurs_admin">Collaborateurs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/services_admin') ?>" href="/services_admin">Services</a>
+                        <a class="nav-link <?php echo isActive('/services_admin') ?>" href="/services_admin">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/habitats_admin') ?>" href="/habitats_admin">Habitats</a>
+                        <a class="nav-link <?php echo isActive('/habitats_admin') ?>" href="/habitats_admin">Habitats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/animaux_admin') ?>" href="/animaux_admin">Animaux</a>
+                        <a class="nav-link <?php echo isActive('/animaux_admin') ?>" href="/animaux_admin">Animaux</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/horaires_admin') ?>" href="/horaires_admin">Horaires</a>
+                        <a class="nav-link <?php echo isActive('/horaires_admin') ?>" href="/horaires_admin">Horaires</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/comptes_rendus_admin') ?>" href="/compte_rendu_admin">Comptes rendus</a>
+                        <a class="nav-link <?php echo isActive('/comptes_rendus_admin') ?>" href="/compte_rendu_admin">Comptes rendus</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/consommation_animaux_admin') ?>" href="/consommation_animaux_admin">Consommations</a>
+                        <a class="nav-link <?php echo isActive('/consommation_animaux_admin') ?>" href="/consommation_animaux_admin">Consommations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/avis_admin') ?>" href="/avis_admin">Avis</a>
+                        <a class="nav-link <?php echo isActive('/avis_admin') ?>" href="/avis_admin">Avis</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/contacts_admin') ?>" href="/contacts_admin">Contacts</a>
+                        <a class="nav-link <?php echo isActive('/contacts_admin') ?>" href="/contacts_admin">Contacts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $utilController->isActive('/roles_admin') ?>" href="/roles_admin">Roles</a>
+                        <a class="nav-link <?php echo isActive('/roles_admin') ?>" href="/roles_admin">Roles</a>
                     </li>
                 </ul>
             </div>
