@@ -4,10 +4,10 @@
 require_once '../Router/routerHandler.php';
 require_once '../Controllers/PageController.php';
 require_once '../Controllers/UserController.php';
+require_once '../Controllers/AvisController.php';
 require_once '../Controllers/CollaborateursController.php';
 
 require_once '../Middleware/AuthMiddleware.php';
-
 
 require_once '../Router/Router.php';
 
@@ -25,12 +25,11 @@ $router->addRoute('GET', '/error', 'PageController', 'error404');
 $router->addRoute('POST', '/connexion', 'UserController', 'login');
 $router->addRoute('GET', '/creationPassword/{id}', 'PageController', 'creationPassword');
 $router->addRoute('POST', '/creationPassword/{id}', 'CollaborateursController', 'updatePassword');
-
+$router->addRoute('POST', '/creationAvis', 'AvisController', 'insert');
 
 // Route soumis a authentification utilisateur
 if (middleware_auth()) {
     $router->addRoute('GET', '/accueil_admin', 'PageController', 'accueil_admin');
-    $router->addRoute('GET', '/collaborateurs_admin', 'PageController', 'collaborateurs_admin');
     $router->addRoute('GET', '/services_admin', 'PageController', 'services_admin');
     $router->addRoute('GET', '/habitats_admin', 'PageController', 'habitats_admin');
     $router->addRoute('GET', '/animaux_admin', 'PageController', 'animaux_admin');
@@ -42,12 +41,16 @@ if (middleware_auth()) {
     $router->addRoute('GET', '/roles_admin', 'PageController', 'roles_admin');
     $router->addRoute('GET', '/deconnexion', 'UserController', 'logout');
 
+    if ($_SESSION['id_user_arcadia']['role_id'] === 1) {
+        $router->addRoute('GET', '/collaborateurs_admin', 'PageController', 'collaborateurs_admin');
+        $router->addRoute('POST', '/collaborateurs_admin', 'CollaborateursController', 'show');
+        $router->addRoute('POST', '/collaborateurs_admin_update', 'CollaborateursController', 'update');
+        $router->addRoute('POST', '/collaborateurs_admin_insert', 'CollaborateursController', 'insert');
+        $router->addRoute('POST', '/collaborateurs_admin_delete', 'CollaborateursController', 'delete');
+        $router->addRoute('POST', '/collaborateurs_admin_mail', 'CollaborateursController', 'sendEmail');
+    }
 
-    $router->addRoute('POST', '/collaborateurs_admin', 'CollaborateursController', 'show');
-    $router->addRoute('POST', '/collaborateurs_admin_update', 'CollaborateursController', 'update');
-    $router->addRoute('POST', '/collaborateurs_admin_insert', 'CollaborateursController', 'insert');
-    $router->addRoute('POST', '/collaborateurs_admin_delete', 'CollaborateursController', 'delete');
-    $router->addRoute('POST', '/collaborateurs_admin_mail', 'CollaborateursController', 'sendEmail');
+    $router->addRoute('POST', '/visibleAvis', 'AvisController', 'update');
 }
 
 // Appel de la fonction handleRoute pour gérer les routes

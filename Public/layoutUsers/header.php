@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../js/Collaborateurs.js"></script>
     <script src="../js/General.js"></script>
+    <script src="../js/Avis.js"></script>
+
 
 </head>
 
@@ -51,9 +53,11 @@ require_once '../Utils/utils.php';
                     <li class="nav-item">
                         <a class="nav-link <?php echo isActive('/accueil_admin') ?>" href="/accueil_admin">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/collaborateurs_admin') ?>" href="/collaborateurs_admin">Collaborateurs</a>
-                    </li>
+                    <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/collaborateurs_admin') ?>" href="/collaborateurs_admin">Collaborateurs</a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo isActive('/services_admin') ?>" href="/services_admin">Services</a>
                     </li>

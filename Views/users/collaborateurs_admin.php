@@ -1,10 +1,10 @@
 <?php
+
 include $_SERVER['DOCUMENT_ROOT'] . 'layoutUsers/header.php';
 
 require_once '../Controllers/CollaborateursController.php';
 $collaborateursController = new CollaborateursController();
 $collaborateurs = $collaborateursController->index();
-
 
 require_once '../Controllers/RolesController.php';
 $rolesController = new RolesController();
@@ -67,7 +67,10 @@ $roles = $rolesController->index();
                         <?php } ?>
                     </td>
                     <td class="text-center">
-                        <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="Collaborateurs.passwordCollaborateurs(<?= $collaborateur['id'] ?>,'<?= $collaborateur['username'] ?>', '<?= $collaborateur['nom'] ?>', '<?= $collaborateur['prenom'] ?>', '/collaborateurs_admin_mail')"></i>
+                        <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
+                            <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="Collaborateurs.passwordCollaborateurs(<?= $collaborateur['id'] ?>,'<?= $collaborateur['username'] ?>', '<?= $collaborateur['nom'] ?>', '<?= $collaborateur['prenom'] ?>', '/collaborateurs_admin_mail')"></i>
+                        <?php } ?>
+
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -102,12 +105,12 @@ $roles = $rolesController->index();
                     <input type="text" class="form-control" id="prenom" placeholder="Prenom">
                     <label for="prenom">Prenom</label>
                 </div>
-
-                <select name="role" id="role_id" class="form-select mb-3" aria-label="role">
+                <select name="role" id="role_id" class="form-select mb-3 d-none" aria-label="role">
                     <?php foreach ($roles as $role) : ?>
                         <option value="<?= $role['id'] ?>"><?= $role['nom'] ?></option>
                     <?php endforeach; ?>
                 </select>
+
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="statut">

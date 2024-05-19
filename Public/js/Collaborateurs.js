@@ -20,6 +20,11 @@ class Collaborateurs {
         document.getElementById("role_id").value = collaborateurData.role_id;
         document.getElementById("id_collaborateur").value =
           collaborateurData.id;
+
+        if (collaborateurData.role_id != 1) {
+          var role_id = document.getElementById("role_id");
+          role_id.classList.remove("d-none");
+        }
       } else {
         // La requête a échoué, afficher un message d'erreur
         console.error("Erreur lors de la requête :", xhr.statusText);
@@ -54,14 +59,24 @@ class Collaborateurs {
   }
 
   static updateCollaborateur(url) {
+    document.getElementById("validation").style.display = "none";
     // Récupérer les valeurs des champs du formulaire
     var username = document.getElementById("username").value;
     var nom = document.getElementById("nom").value;
     var prenom = document.getElementById("prenom").value;
-    var role_id = document.getElementById("role_id").value;
     var statut = document.getElementById("statut").checked ? 1 : 0;
     var id_collaborateur = document.getElementById("id_collaborateur").value;
     var msg = document.getElementById("msg");
+
+    var role_id_value, role_id;
+
+    role_id = document.getElementById("role_id");
+
+    if (role_id.classList.contains("d-none")) {
+      role_id_value = 1;
+    } else {
+      role_id_value = role_id.value;
+    }
 
     // Créer une instance de XMLHttpRequest
     var xhr = new XMLHttpRequest();
@@ -75,7 +90,7 @@ class Collaborateurs {
       "&prenom=" +
       encodeURIComponent(prenom) +
       "&role_id=" +
-      encodeURIComponent(role_id) +
+      encodeURIComponent(role_id_value) +
       "&statut=" +
       encodeURIComponent(statut);
     xhr.open("POST", url, true);
@@ -100,7 +115,7 @@ class Collaborateurs {
             msg.classList.add("text-success");
             msg.innerText = "Enregistrement effectué.";
           } else {
-            document.getElementById("validation").style.display = "none";
+            msg.classList.remove("text-danger");
             msg.classList.add("text-success");
             msg.innerText =
               "Enregistrement effectué. Le mail de création de mot de passe a été envoyé au collaborateur.";
@@ -123,11 +138,13 @@ class Collaborateurs {
     var validationBtn = document.getElementById("validation");
     validationBtn.setAttribute("data-action", url);
 
-    action === "Creation"
-      ? (document.getElementById("statut").checked = true)
-      : null;
-
-    console.log(url);
+    if (action === "Creation") {
+      document.getElementById("statut").checked = true;
+      var role_id = document.getElementById("role_id");
+      role_id.classList.remove("d-none");
+    } else {
+      null;
+    }
   }
 
   static passwordCollaborateurs(id, username, nom, prenom, url) {

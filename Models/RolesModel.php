@@ -11,7 +11,7 @@ class RolesModel extends DatabaseModel
 
     public function index()
     {
-        $stmt = $this->pdo->query("SELECT * FROM roles");
+        $stmt = $this->pdo->query("SELECT * FROM roles WHERE id <> 1");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

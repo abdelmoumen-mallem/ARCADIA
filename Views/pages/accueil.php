@@ -135,10 +135,7 @@
                                 <p class="small text-muted">Le 12/04/24</p>
                                 <p>Bonne experience. je recommande vivement le zoo. Petit bemol sur le temps d'attente du petit train.</p>
                                 <div>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
+
                                 </div>
                             </div>
                         </div>
@@ -150,17 +147,59 @@
                                 <p class="small text-muted">Le 12/04/23</p>
                                 <p>Quelques animaux sont parfois endormis, mais nous avons passé un bon moment en famille</p>
                                 <div>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="btn btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Dèposer un avis <i class="bi bi-plus-square"></i></div>
+
         </div>
+
     </section>
+
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop1Label1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdrop1Label1"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload();"></button>
+                </div>
+                <div class=" modal-body">
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="nom" placeholder="Votre pseudo" required>
+                        <label for="nom">Pseudo</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Votre message" id="description" required></textarea>
+                        <label for="description">Message</label>
+                    </div>
+
+                    <div class="form-floating mt-3">
+                        <div>Votre note</div>
+                        <i id="note-1" class="bi bi-star" onclick="Avis.notation(0)" style="cursor: pointer;"></i>
+                        <i id="note-2" class="bi bi-star" onclick="Avis.notation(1)" style="cursor: pointer;"></i>
+                        <i id="note-3" class="bi bi-star" onclick="Avis.notation(2)" style="cursor: pointer;"></i>
+                        <i id="note-4" class="bi bi-star" onclick="Avis.notation(3)" style="cursor: pointer;"></i>
+                        <i id="note-5" class="bi bi-star" onclick="Avis.notation(4)" style="cursor: pointer;"></i>
+                    </div>
+
+
+
+                    <div class=" mt-3" id="msg"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload();">Fermer</button>
+                    <button type=" button" class="btn btn-primary" id="validation" data-action="" onclick="Avis.insert('/creationAvis')">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
