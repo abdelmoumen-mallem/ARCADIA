@@ -4,7 +4,9 @@ include $_SERVER['DOCUMENT_ROOT'] . 'layoutUsers/header.php';
 
 require_once '../Controllers/AvisController.php';
 $avisController = new AvisController();
-$avis = $avisController->index();
+
+$filtre = "";
+$avis = $avisController->index($filtre);
 
 
 ?>
@@ -21,7 +23,8 @@ $avis = $avisController->index();
                 <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Nom</th>
-                    <th scope="col">Description</th>
+                    <th s class="text-center" cope="col">Description</th>
+                    <th class="text-center" scope="col">Note</th>
                     <th scope="col">Statut</th>
                     <th class="text-center" scope="col">Action</th>
                 </tr>
@@ -32,9 +35,10 @@ $avis = $avisController->index();
                         <td><?= $aviss['date_creation'] ?></td>
 
                         <td><?= $aviss['nom'] ?></td>
-                        <td>
+                        <td class="text-center">
                             <i class="bi bi-pencil btn btn-info" onclick="Avis.show('<?= str_replace("\n", " ", $aviss['description']) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         </td>
+                        <td class="text-center"><?= $aviss['note'] ?></td>
                         <td>
                             <?php if ($aviss['visible'] == 1) : ?>
                                 <div id="avis_<?= $aviss['id'] ?>" class="badge text-bg-success">Visible</div>
@@ -43,7 +47,7 @@ $avis = $avisController->index();
                             <?php endif; ?>
                         </td>
                         <td class="text-center">
-                            <input class="form-check-input" type="checkbox" <?= $aviss['visible'] == 1 ? 'checked' : '' ?> onclick="Avis.update('<?= $aviss['id'] ?>', this.checked, '/visibleAvis', '/avis_admin')" value="" id="flexCheckDefault">
+                            <input id="visible_<?= $aviss['id'] ?>" class="form-check-input" type="checkbox" <?= $aviss['visible'] == 1 ? 'checked' : '' ?> onclick="Avis.update('<?= $aviss['id'] ?>', this.checked, '/visibleAvis', '/avis_admin')" value="" id="flexCheckDefault">
                         </td>
                     </tr>
                 <?php endforeach; ?>

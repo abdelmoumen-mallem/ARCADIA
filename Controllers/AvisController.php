@@ -13,9 +13,9 @@ class AvisController
         $this->avisModel = new AvisModel();
     }
 
-    public function index()
+    public function index($filtre)
     {
-        return $this->avisModel->index();
+        return $this->avisModel->index(secureQuery($filtre));
     }
     public function insert()
     {

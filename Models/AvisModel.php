@@ -9,9 +9,9 @@ class AvisModel extends DatabaseModel
         parent::__construct();
     }
 
-    public function index()
+    public function index($filtre)
     {
-        $stmt = $this->pdo->query("SELECT * FROM avis");
+        $stmt = $this->pdo->query("SELECT * FROM avis $filtre");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

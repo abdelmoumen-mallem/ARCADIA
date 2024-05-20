@@ -53,6 +53,9 @@ class Avis {
     if (
       !confirm(`Êtes-vous sûr de vouloir rendre ${visibleAlert} cette avis ?`)
     ) {
+      visible == 1
+        ? (document.getElementById("visible_" + id).checked = false)
+        : (document.getElementById("visible_" + id).checked = true);
       return;
     }
 

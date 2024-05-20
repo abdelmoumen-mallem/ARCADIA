@@ -1,7 +1,17 @@
 <!-- Page accueil -->
 
 <!-- Inclusion navbar -->
-<?php include $_SERVER['DOCUMENT_ROOT'] . 'layout/header.php'; ?>
+<?php
+
+include $_SERVER['DOCUMENT_ROOT'] . 'layout/header.php';
+
+require_once '../Controllers/AvisController.php';
+$avisController = new AvisController();
+
+$filtre = 'WHERE visible = 1';
+$avis = $avisController->index($filtre);
+
+?>
 
 <header class="fond-vert">
     <div class="container mt-5 text-center ">
@@ -128,30 +138,40 @@
             <h2 class="text-center">Avis des visiteurs</h2>
             <div id="avisCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5>Jean Dupont</h5>
-                                <p class="small text-muted">Le 12/04/24</p>
-                                <p>Bonne experience. je recommande vivement le zoo. Petit bemol sur le temps d'attente du petit train.</p>
-                                <div>
+                    <?php
+                    $premierElement = true;
+                    foreach ($avis as $aviss) :
+                    ?>
+                        <div class="carousel-item <?php echo $premierElement ? 'active' : ''; ?>">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5><?= $aviss['nom'] ?></h5>
+                                    <p class="small text-muted">Le <?= $aviss['date_creation'] ?></p>
+                                    <p><?= $aviss['description'] ?></p>
+                                    <div>
+                                        <div>
+                                            <?php
 
+                                            $restant = 5 - $aviss['note'];
+
+                                            for ($i = 0; $i < $aviss['note']; $i++) {
+                                                echo '<i class="bi bi-star-fill text-warning"></i>';
+                                            }
+
+                                            for ($i = 0; $i < $restant; $i++) {
+                                                echo '<i class="bi bi-star"></i>';
+                                            }
+                                            ?>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5>Marie Curie</h5>
-                                <p class="small text-muted">Le 12/04/23</p>
-                                <p>Quelques animaux sont parfois endormis, mais nous avons passé un bon moment en famille</p>
-                                <div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                        $premierElement = false;
+                    endforeach;
+                    ?>
                 </div>
             </div>
             <div class="btn btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Dèposer un avis <i class="bi bi-plus-square"></i></div>
