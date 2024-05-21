@@ -31,7 +31,6 @@ class CollaborateursController
 
     public function update()
     {
-        // Récupérer les données postées depuis le formulaire
         $id = $_POST['id'];
         $username = $_POST['username'];
         $nom = $_POST['nom'];
@@ -39,13 +38,11 @@ class CollaborateursController
         $statut = isset($_POST['statut']) ? $_POST['statut'] : 0;
         $role_id = $_POST['role_id'];
 
-        // Vérifier les données obligatoires
         if (empty($nom) || empty($prenom) || empty($username) || empty($role_id)) {
             echo json_encode(2);
             exit;
         }
 
-        // Vérifier l'unicité du nom d'utilisateur
         $usernameTest = $this->collaborateurModel->usernameTest($id, $username);
 
         if ($usernameTest > 0) {
@@ -53,7 +50,6 @@ class CollaborateursController
             exit;
         }
 
-        // Effectuer la mise à jour
         $collaborateurInfo = $this->collaborateurModel->update($id, $username, $nom, $prenom, $statut, $role_id);
 
         echo json_encode($collaborateurInfo);
@@ -61,20 +57,17 @@ class CollaborateursController
 
     public function insert()
     {
-        // Récupérer les données postées depuis le formulaire
         $username = $_POST['username'];
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
         $statut = isset($_POST['statut']) ? $_POST['statut'] : 0;
         $role_id = $_POST['role_id'];
 
-        // Vérifier les données obligatoires
         if (empty($nom) || empty($prenom) || empty($username) || empty($role_id)) {
             echo json_encode(2);
             exit;
         }
 
-        // Vérifier l'unicité du nom d'utilisateur
         $usernameTest = $this->collaborateurModel->usernameTest(null, $username);
 
         if ($usernameTest > 0) {
@@ -82,15 +75,13 @@ class CollaborateursController
             exit;
         }
 
-        // Effectuer la mise à jour
         $collaborateurInfo = $this->collaborateurModel->insert($username, $nom, $prenom, $statut, $role_id);
 
         if ($collaborateurInfo) {
 
-            $to = 'abdelmoumen.mallem@gmail.com'; //$username
+            $to = 'abdelmoumen.mallem@gmail.com';
             $subject = 'Votre mot de passe utlisateur ARCADIA.';
 
-            // Lire le contenu du fichier de template
             $template = '../Views/pages/lienPassword.php';
             $body = file_get_contents($template);
 
@@ -98,13 +89,11 @@ class CollaborateursController
 
             $time = time();
 
-            // Vous pouvez remplacer des variables dans le template si nécessaire
             $body = str_replace('{{nom}}', $nom, $body);
             $body = str_replace('{{prenom}}', $prenom, $body);
             $body = str_replace('{{id}}', $time . '_' . encodeId($usernameId, $time), $body);
             $body = str_replace('{{action}}', 'Votre compte utilisateur a été créé sur ARCADIA.', $body);
 
-            // Appel de la méthode sendMail pour envoyer l'e-mail
             $mailer = $this->collaborateurMail->sendMail($to, $subject, $body);
         }
 
@@ -125,7 +114,6 @@ class CollaborateursController
 
     public function updatePassword()
     {
-        // Récupérer les données postées depuis le formulaire
         $id = $_POST['id'];
         $password1 = $_POST['password1'];
         $password2 = $_POST['password2'];
@@ -133,29 +121,22 @@ class CollaborateursController
 
         $url = $time . "_" . $id;
 
-        // Vérifier les données obligatoires
         if (empty($password1) || empty($password2)) {
-            //echo "Les informations sont manquantes";
             header("Location: /creationPassword/" . $url . "_error1");
             exit;
         } else if ($password1 !== $password2) {
-            //echo "Les mots de passe sont differents";
             header("Location: /creationPassword/" . $url . "_error2");
             exit;
         } else if (strlen($password1) < 8) {
-            //echo "Le mot de passe doit avoir au moins 8 caractères";
             header("Location: /creationPassword/" . $url . "_error3");
             exit;
         } else if (!preg_match("/[A-Z]/", $password1) || !preg_match("/[a-z]/", $password1) || !preg_match("/[0-9]/", $password1) || !preg_match("/[^a-zA-Z0-9]/", $password1)) {
-            //echo "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spécial";
             header("Location: /creationPassword/" . $url . "_error4");
             exit;
         }
-        // Effectuer la mise à jour
         $collaborateurInfo = $this->collaborateurModel->updatePassword(decodeId($id, $time), $password1);
 
         if (!$collaborateurInfo) {
-            //echo "Une erreur s'est produite";
             header("Location: /creationPassword/" . $url . "_error5");
         } else {
             header("Location: /connexion");
@@ -170,22 +151,19 @@ class CollaborateursController
         $prenom = $_POST['prenom'];
         $username = $_POST['username'];
 
-        $to = 'abdelmoumen.mallem@gmail.com'; //$username
+        $to = 'abdelmoumen.mallem@gmail.com';
         $subject = 'Votre mot de passe utlisateur ARCADIA.';
 
-        // Lire le contenu du fichier de template
         $template = '../Views/pages/lienPassword.php';
         $body = file_get_contents($template);
 
         $time = time();
 
-        // Vous pouvez remplacer des variables dans le template si nécessaire
         $body = str_replace('{{nom}}', $nom, $body);
         $body = str_replace('{{prenom}}', $prenom, $body);
         $body = str_replace('{{id}}', $time . '_' . encodeId($id, $time), $body);
         $body = str_replace('{{action}}', 'Une demande de modification de mot de passe a été demandé.', $body);
 
-        // Appel de la méthode sendMail pour envoyer l'e-mail
         $mailer = $this->collaborateurMail->sendMail($to, $subject, $body);
     }
 }

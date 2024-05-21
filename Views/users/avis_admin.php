@@ -36,7 +36,7 @@ $avis = $avisController->index($filtre);
 
                         <td><?= $aviss['nom'] ?></td>
                         <td class="text-center">
-                            <i class="bi bi-pencil btn btn-info" onclick="Avis.show('<?= str_replace("\n", " ", $aviss['description']) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-pencil btn btn-info" onclick="Avis.show('<?= addslashes(str_replace("\n", " ", $aviss['description'])) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         </td>
                         <td class="text-center"><?= $aviss['note'] ?></td>
                         <td>

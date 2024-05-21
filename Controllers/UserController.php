@@ -18,7 +18,6 @@ class UserController
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            // Tentative de connexion via le modèle
             $loginSuccessful = $this->userModel->verifyLogin($username, $password);
 
             if ($loginSuccessful) {

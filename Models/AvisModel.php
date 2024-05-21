@@ -26,8 +26,8 @@ class AvisModel extends DatabaseModel
             ]);
             return true;
         } catch (PDOException $e) {
-            return $e->getMessage();
-            //return false;
+            //return $e->getMessage();
+            return false;
         }
     }
 

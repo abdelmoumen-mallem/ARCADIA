@@ -1,6 +1,5 @@
 class Avis {
   static insert(url) {
-    // Récupérer les valeurs des champs du formulaire
     var nom = document.getElementById("nom").value;
     var description = document.getElementById("description").value;
     var msg = document.getElementById("msg");
@@ -9,7 +8,6 @@ class Avis {
       .getElementById("validation")
       .getAttribute("data-action");
 
-    // Créer une instance de XMLHttpRequest
     var xhr = new XMLHttpRequest();
     var params =
       "nom=" +
@@ -38,12 +36,10 @@ class Avis {
       }
     };
 
-    // Envoyer la requête avec les données JSON
     xhr.send(params);
   }
 
   static show(message) {
-    // Affecter le contenu au paragraphe
     document.getElementById("description").innerHTML = message;
   }
 
@@ -61,7 +57,6 @@ class Avis {
 
     var visibleValue = visible ? 1 : 0;
 
-    // Configurer les paramètres de la requête
     var xhr = new XMLHttpRequest();
     var params =
       "id=" +
@@ -74,7 +69,6 @@ class Avis {
 
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        //window.location.reload();
         var rowAvis = document.getElementById("avis_" + id);
         if (visible == 1) {
           rowAvis.textContent = "Visible";
@@ -90,7 +84,6 @@ class Avis {
       }
     };
 
-    // Envoyer la requête avec les paramètres
     xhr.send(params);
   }
 

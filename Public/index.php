@@ -6,6 +6,9 @@ require_once '../Controllers/PageController.php';
 require_once '../Controllers/UserController.php';
 require_once '../Controllers/AvisController.php';
 require_once '../Controllers/CollaborateursController.php';
+require_once '../Controllers/ServicesController.php';
+
+
 
 require_once '../Middleware/AuthMiddleware.php';
 
@@ -51,6 +54,16 @@ if (middleware_auth()) {
     }
 
     $router->addRoute('POST', '/visibleAvis', 'AvisController', 'update');
+
+    $router->addRoute('POST', '/services_admin_insert', 'ServicesController', 'insert');
+    $router->addRoute('POST', '/services_admin_update', 'ServicesController', 'update');
+    $router->addRoute('POST', '/services_admin_show', 'ServicesController', 'show');
+    $router->addRoute('POST', '/services_admin_delete', 'ServicesController', 'delete');
+
+    $router->addRoute('POST', '/habitats_admin_insert', 'HabitatsController', 'insert');
+    $router->addRoute('POST', '/habitats_admin_update', 'HabitatsController', 'update');
+    $router->addRoute('POST', '/habitats_admin_show', 'HabitatsController', 'show');
+    $router->addRoute('POST', '/habitats_admin_delete', 'HabitatsController', 'delete');
 }
 
 // Appel de la fonction handleRoute pour gérer les routes

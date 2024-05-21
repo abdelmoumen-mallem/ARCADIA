@@ -13,7 +13,7 @@
     <script src="../js/Collaborateurs.js"></script>
     <script src="../js/General.js"></script>
     <script src="../js/Avis.js"></script>
-
+    <script src="../js/Services.js"></script>
 
 </head>
 

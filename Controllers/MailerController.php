@@ -15,7 +15,6 @@ class MailerController
         $mail = new PHPMailer(true);
 
         try {
-            // Paramètres du serveur SMTP
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
@@ -32,16 +31,13 @@ class MailerController
                 ]
             ];
 
-            // Destinataire
             $mail->setFrom('abdelmoumen.mallem@gmail.com', 'Mallem');
             $mail->addAddress($to);
 
-            // Contenu de l'e-mail
             $mail->isHTML(true);
             $mail->Subject = $subject;
             $mail->Body = $body;
 
-            // Envoyer l'e-mail
             $mail->send();
             return $mail;
         } catch (Exception $e) {

@@ -1,18 +1,14 @@
 class Collaborateurs {
   static fetchCollaborateurInfo(collaborateurId, url) {
     this.actionCollaborateurs("Modification", "/collaborateurs_admin_update");
-    // Configurer les paramètres de la requête
     var xhr = new XMLHttpRequest();
     var params = "id=" + encodeURIComponent(collaborateurId);
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    // Définir la fonction de rappel pour gérer la réponse
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        // La requête a réussi, obtenir les données JSON
         var collaborateurData = JSON.parse(xhr.responseText);
-        // Remplir les champs de la modal avec les données récupérées
         document.getElementById("username").value = collaborateurData.username;
         document.getElementById("nom").value = collaborateurData.nom;
         document.getElementById("prenom").value = collaborateurData.prenom;
@@ -26,12 +22,10 @@ class Collaborateurs {
           role_id.classList.remove("d-none");
         }
       } else {
-        // La requête a échoué, afficher un message d'erreur
         console.error("Erreur lors de la requête :", xhr.statusText);
       }
     };
 
-    // Envoyer la requête avec les paramètres
     xhr.send(params);
   }
 
@@ -44,23 +38,19 @@ class Collaborateurs {
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    // Définir la fonction de rappel pour gérer la réponse
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         window.location.reload();
       } else {
-        // La requête a échoué, afficher un message d'erreur
         console.error("Erreur lors de la requête :", xhr.statusText);
       }
     };
 
-    // Envoyer la requête avec les paramètres
     xhr.send(params);
   }
 
   static updateCollaborateur(url) {
     document.getElementById("validation").style.display = "none";
-    // Récupérer les valeurs des champs du formulaire
     var username = document.getElementById("username").value;
     var nom = document.getElementById("nom").value;
     var prenom = document.getElementById("prenom").value;
@@ -78,7 +68,6 @@ class Collaborateurs {
       role_id_value = role_id.value;
     }
 
-    // Créer une instance de XMLHttpRequest
     var xhr = new XMLHttpRequest();
     var params =
       "id=" +
@@ -127,7 +116,6 @@ class Collaborateurs {
       }
     };
 
-    // Envoyer la requête avec les données JSON
     xhr.send(params);
   }
 
@@ -155,7 +143,6 @@ class Collaborateurs {
     ) {
       return;
     }
-    // Configurer les paramètres de la requête
     var xhr = new XMLHttpRequest();
     var params =
       "id=" +
@@ -170,7 +157,6 @@ class Collaborateurs {
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    // Envoyer la requête avec les paramètres
     xhr.send(params);
   }
 }

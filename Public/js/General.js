@@ -17,7 +17,6 @@ class General {
       }
     };
 
-    // Envoyer la requête
     xhr.send();
   }
 }
