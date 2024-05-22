@@ -1,7 +1,7 @@
 class Avis {
   static insert(url) {
     var nom = document.getElementById("nom").value;
-    var description = document.getElementById("description").value;
+    var description = document.getElementById("description").value.trim();
     var msg = document.getElementById("msg");
 
     var note = document
@@ -88,7 +88,7 @@ class Avis {
   }
 
   static notation(note) {
-    var notations = document.querySelectorAll("i.bi-star");
+    var notations = document.querySelectorAll("i.bi-star.notation");
 
     for (var i = 0; i < notations.length; i++) {
       if (i <= note) {

@@ -23,7 +23,7 @@ $services = $servicesController->index();
             <thead>
                 <tr>
                     <th scope="col">Nom</th>
-                    <th s class="text-center" cope="col">Description</th>
+                    <th class="text-center" scope="col">Description</th>
                     <th scope="col" class="text-center">Modifier</th>
                     <th scope="col" class="text-center">Supprimer</th>
                 </tr>
@@ -38,11 +38,11 @@ $services = $servicesController->index();
                         </td>
 
                         <td class="text-center">
-                            <i class="bi bi-pencil btn btn-warning" onclick="Services.fetchServices(<?= $service['id'] ?> , '/services_admin_show')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-pencil btn btn-warning" onclick="Services.fetchServices(<?= $service['id'] ?> , '/services_admin_show','services')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
 
                         </td>
                         <td class="text-center">
-                            <i class="bi bi-trash3 btn btn-danger" onclick="Services.deleteServices(<?= $service['id'] ?> , '/services_admin_delete')"></i>
+                            <i class="bi bi-trash3 btn btn-danger" onclick="Services.deleteServices(<?= $service['id'] ?> , '/services_admin_delete','services')"></i>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -86,7 +86,7 @@ $services = $servicesController->index();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload();">Fermer</button>
-                <button type=" button" class="btn btn-primary" id="validation" data-action="" onclick="Services.insertServices(this.getAttribute('data-action'))">Valider</button>
+                <button type=" button" class="btn btn-primary" id="validation" data-action="" onclick="Services.insertServices(this.getAttribute('data-action'),'services')">Valider</button>
             </div>
         </div>
     </div>

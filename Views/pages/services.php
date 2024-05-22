@@ -26,7 +26,7 @@ $services = $servicesController->index();
             <div class="card-body">
                 <h2 class="card-title"><?= $service['nom'] ?></h2>
                 <p class="card-text">
-                    <?= str_replace(".", ".<br>", $service['description']) ?>
+                    <?= nl2br($service['description']) ?>
                 </p>
             </div>
         </div>

@@ -146,7 +146,7 @@ $avis = $avisController->index($filtre);
                             <div class="card">
                                 <div class="card-body">
                                     <h5><?= $aviss['nom'] ?></h5>
-                                    <p class="small text-muted">Le <?= $aviss['date_creation'] ?></p>
+                                    <p class="small text-muted">Le <?= convertDate($aviss['date_creation'], false) ?></p>
                                     <p><?= $aviss['description'] ?></p>
                                     <div>
                                         <div>
@@ -201,11 +201,11 @@ $avis = $avisController->index($filtre);
 
                     <div class="form-floating mt-3">
                         <div>Votre note</div>
-                        <i id="note-1" class="bi bi-star" onclick="Avis.notation(0)" style="cursor: pointer;"></i>
-                        <i id="note-2" class="bi bi-star" onclick="Avis.notation(1)" style="cursor: pointer;"></i>
-                        <i id="note-3" class="bi bi-star" onclick="Avis.notation(2)" style="cursor: pointer;"></i>
-                        <i id="note-4" class="bi bi-star" onclick="Avis.notation(3)" style="cursor: pointer;"></i>
-                        <i id="note-5" class="bi bi-star" onclick="Avis.notation(4)" style="cursor: pointer;"></i>
+                        <i id="note-1" class="bi bi-star notation" onclick="Avis.notation(0)" style="cursor: pointer;"></i>
+                        <i id="note-2" class="bi bi-star notation" onclick="Avis.notation(1)" style="cursor: pointer;"></i>
+                        <i id="note-3" class="bi bi-star notation" onclick="Avis.notation(2)" style="cursor: pointer;"></i>
+                        <i id="note-4" class="bi bi-star notation" onclick="Avis.notation(3)" style="cursor: pointer;"></i>
+                        <i id="note-5" class="bi bi-star notation" onclick="Avis.notation(4)" style="cursor: pointer;"></i>
                     </div>
 
 

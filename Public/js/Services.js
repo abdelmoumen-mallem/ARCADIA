@@ -1,17 +1,31 @@
 class Services {
-  static insertServices(url) {
+  static insertServices(url, navigation) {
+    console.log(navigation);
     var nom = document.getElementById("nom").value;
-    var description = document.getElementById("description").value;
+    if (navigation !== "races") {
+      var description = document.getElementById("description").value.trim();
+    }
     var formfile = document.getElementById("formFile").files[0];
     var id_service = document.getElementById("id_service").value;
     var image_url = document.getElementById("image_url").value;
 
     var msg = document.getElementById("msg");
 
+    var section;
+    if (navigation === "services") {
+      section = "ce service";
+    } else if (navigation === "habitats") {
+      section = "cet habitat";
+    } else if (navigation === "races") {
+      section = "cet race";
+    }
+
     var formData = new FormData();
 
     formData.append("nom", nom);
-    formData.append("description", description);
+    if (navigation !== "races") {
+      formData.append("description", description);
+    }
     formData.append("formFile", formfile);
     formData.append("id_service", id_service);
     formData.append("image_url", image_url);
@@ -29,7 +43,7 @@ class Services {
           msg.innerText = "Le fichier n'est pas téléchargée";
         } else if (xhr.responseText == 3) {
           msg.classList.add("text-danger");
-          msg.innerText = "Ce service existe délà";
+          msg.innerText = `${section} existe délà`;
         } else if (xhr.responseText == 4) {
           msg.classList.add("text-danger");
           msg.innerText = "La taille du fichier depasse 5mo";
@@ -86,8 +100,17 @@ class Services {
     validationBtn.setAttribute("data-action", url);
   }
 
-  static fetchServices(id, url) {
-    this.actionServices("Modification", "/services_admin_update");
+  static fetchServices(id, url, navigation) {
+    var section;
+    if (navigation === "services") {
+      section = "/services_admin_update";
+    } else if (navigation === "habitats") {
+      section = "/habitats_admin_update";
+    } else if (navigation === "races") {
+      section = "/races_admin_update";
+    }
+
+    this.actionServices("Modification", section);
     var xhr = new XMLHttpRequest();
     var params = "id=" + encodeURIComponent(id);
     xhr.open("POST", url, true);
@@ -97,7 +120,10 @@ class Services {
       if (xhr.status >= 200 && xhr.status < 300) {
         var serviceData = JSON.parse(xhr.responseText);
         document.getElementById("nom").value = serviceData.nom;
-        document.getElementById("description").value = serviceData.description;
+        if (navigation !== "races") {
+          document.getElementById("description").value =
+            serviceData.description;
+        }
         document.getElementById("id_service").value = serviceData.id;
         document.getElementById("image_url").value = serviceData.image_url;
 
@@ -115,8 +141,17 @@ class Services {
     xhr.send(params);
   }
 
-  static deleteServices(id, url) {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer ce service ?")) {
+  static deleteServices(id, url, navigation) {
+    var section;
+    if (navigation === "services") {
+      section = "ce service";
+    } else if (navigation === "habitats") {
+      section = "cet habitat";
+    } else if (navigation === "races") {
+      section = "cet race";
+    }
+
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer ${section} ?`)) {
       return;
     }
     var xhr = new XMLHttpRequest();

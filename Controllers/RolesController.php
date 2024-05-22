@@ -11,8 +11,8 @@ class RolesController
         $this->rolesCollaborateurs = new RolesModel();
     }
 
-    public function index()
+    public function index($filtre)
     {
-        return $this->rolesCollaborateurs->index();
+        return $this->rolesCollaborateurs->index(secureQuery($filtre));
     }
 }

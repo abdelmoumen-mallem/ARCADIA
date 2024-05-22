@@ -119,6 +119,12 @@ body {
     object-fit: cover;
 }
 
+.square-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
 .animal {
     width: 8em; 
     height: 8em;

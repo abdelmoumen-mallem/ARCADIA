@@ -43,7 +43,7 @@ class ServicesController
         }
 
         if ($_FILES["formFile"]["error"] == UPLOAD_ERR_OK) {
-            if ($_FILES["formFile"]["size"] > 5000000) {
+            if ($_FILES["formFile"]["size"] > 10000000) {
                 echo json_encode(4);
                 exit;
             }
@@ -104,7 +104,7 @@ class ServicesController
         } else {
 
             if ($_FILES["formFile"]["error"] == UPLOAD_ERR_OK) {
-                if ($_FILES["formFile"]["size"] > 5000000) {
+                if ($_FILES["formFile"]["size"] > 10000000) {
                     echo json_encode(4);
                     exit;
                 }

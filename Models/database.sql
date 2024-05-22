@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS consommations_animaux (
     grammage FLOAT NOT NULL,
     animal_id INT NOT NULL,
     utilisateur_id INT NOT NULL,
-    date_creation DATE NOT NULL DEFAULT CURDATE(),
+    date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_cons_animal_id FOREIGN KEY (animal_id) REFERENCES animaux (id) ON DELETE RESTRICT,
     CONSTRAINT fk_cons_utilisateur_id FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id) ON DELETE RESTRICT
 );

@@ -43,6 +43,11 @@ class CollaborateursController
             exit;
         }
 
+        if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(5);
+            exit;
+        }
+
         $usernameTest = $this->collaborateurModel->usernameTest($id, $username);
 
         if ($usernameTest > 0) {
@@ -65,6 +70,11 @@ class CollaborateursController
 
         if (empty($nom) || empty($prenom) || empty($username) || empty($role_id)) {
             echo json_encode(2);
+            exit;
+        }
+
+        if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(5);
             exit;
         }
 

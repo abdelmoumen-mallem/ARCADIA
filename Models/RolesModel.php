@@ -4,14 +4,15 @@ require_once 'DatabaseModel.php';
 
 class RolesModel extends DatabaseModel
 {
+    protected string $table = 'roles';
+
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function index()
+    public function index($filtre)
     {
-        $stmt = $this->pdo->query("SELECT * FROM roles WHERE id <> 1");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->indexGeneral($this->table . " " . $filtre);
     }
 }

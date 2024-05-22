@@ -17,12 +17,12 @@ class AvisController
     {
         return $this->avisModel->index(secureQuery($filtre));
     }
+
     public function insert()
     {
         $description = $_POST['description'];
         $nom = $_POST['nom'];
         $note = $_POST['note'];
-
 
         if (empty($nom) || empty($description)) {
             echo json_encode(1);

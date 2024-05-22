@@ -8,7 +8,8 @@ $collaborateurs = $collaborateursController->index();
 
 require_once '../Controllers/RolesController.php';
 $rolesController = new RolesController();
-$roles = $rolesController->index();
+$filtre = 'WHERE id <> 1';
+$roles = $rolesController->index($filtre);
 
 ?>
 
@@ -21,7 +22,7 @@ $roles = $rolesController->index();
             <h2>Collaborateurs</h2>
         </div>
         <div class="col-6 text-end">
-            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" onclick="Collaborateurs.actionCollaborateurs('Creation','/collaborateurs_admin_insert')">Ajouter un collaborateur <i class="bi bi-plus-square"></i></div>
+            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" onclick="General.action('Creation','/collaborateurs_admin_insert','collaborateurs')">Ajouter un collaborateur <i class="bi bi-plus-square"></i></div>
         </div>
     </div>
     <table class="table">
@@ -52,23 +53,23 @@ $roles = $rolesController->index();
                         <?php endif; ?>
                     </td>
                     <td><?= $collaborateur['role_nom'] ?></td>
-                    <td><?= $collaborateur['date_creation'] ?></td>
+                    <td><?= convertDate($collaborateur['date_creation'], false) ?></td>
                     <td class="text-center">
                         <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
-                            <i class="bi bi-pencil btn btn-warning" onclick="Collaborateurs.fetchCollaborateurInfo(<?= $collaborateur['id'] ?> , '/collaborateurs_admin')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= $collaborateur['id'] ?> , '/collaborateurs_admin','collaborateurs')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         <?php } ?>
 
                     </td>
                     <td class="text-center">
                         <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
                             <?php if ($_SESSION['id_user_arcadia']['id'] !== 1 || $_SESSION['id_user_arcadia']['id'] !== $collaborateur['id']) { ?>
-                                <i class="bi bi-trash3 btn btn-danger" onclick="Collaborateurs.deleteCollaborateurs(<?= $collaborateur['id'] ?> , '/collaborateurs_admin_delete')"></i>
+                                <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= $collaborateur['id'] ?> , '/collaborateurs_admin_delete', 'collaborateurs')"></i>
                             <?php } ?>
                         <?php } ?>
                     </td>
                     <td class="text-center">
                         <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
-                            <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="Collaborateurs.passwordCollaborateurs(<?= $collaborateur['id'] ?>,'<?= $collaborateur['username'] ?>', '<?= $collaborateur['nom'] ?>', '<?= $collaborateur['prenom'] ?>', '/collaborateurs_admin_mail')"></i>
+                            <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="General.passwordCollaborateurs(<?= $collaborateur['id'] ?>,'<?= $collaborateur['username'] ?>', '<?= $collaborateur['nom'] ?>', '<?= $collaborateur['prenom'] ?>', '/collaborateurs_admin_mail')"></i>
                         <?php } ?>
 
                     </td>
@@ -89,7 +90,7 @@ $roles = $rolesController->index();
             </div>
             <div class=" modal-body">
 
-                <input type="hidden" id="id_collaborateur">
+                <input type="hidden" id="id">
 
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="username" placeholder="Email">
@@ -124,7 +125,7 @@ $roles = $rolesController->index();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload();">Fermer</button>
-                <button type=" button" class="btn btn-primary" id="validation" data-action="" onclick="Collaborateurs.updateCollaborateur(this.getAttribute('data-action'))">Valider</button>
+                <button type=" button" class="btn btn-primary" id="validation" data-action="" onclick="General.insert(this.getAttribute('data-action'), 'collaborateurs')">Valider</button>
             </div>
         </div>
     </div>

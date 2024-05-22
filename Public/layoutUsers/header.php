@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="../js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../js/Collaborateurs.js"></script>
     <script src="../js/General.js"></script>
     <script src="../js/Avis.js"></script>
     <script src="../js/Services.js"></script>
+
+
 
 </head>
 
@@ -71,7 +72,7 @@ require_once '../Utils/utils.php';
                         <a class="nav-link <?php echo isActive('/horaires_admin') ?>" href="/horaires_admin">Horaires</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/comptes_rendus_admin') ?>" href="/compte_rendu_admin">Comptes rendus</a>
+                        <a class="nav-link <?php echo isActive('/compte_rendu_admin') ?>" href="/compte_rendu_admin">Comptes rendus</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo isActive('/consommation_animaux_admin') ?>" href="/consommation_animaux_admin">Consommations</a>
@@ -84,6 +85,9 @@ require_once '../Utils/utils.php';
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo isActive('/roles_admin') ?>" href="/roles_admin">Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo isActive('/races_admin') ?>" href="/races_admin">Races</a>
                     </li>
                 </ul>
             </div>

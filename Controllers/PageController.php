@@ -96,4 +96,9 @@ class PageController
     {
         require_once '../Views/pages/creationPassword.php';
     }
+
+    public function races_admin()
+    {
+        require_once '../Views/users/races_admin.php';
+    }
 }

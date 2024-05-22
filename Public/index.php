@@ -7,8 +7,11 @@ require_once '../Controllers/UserController.php';
 require_once '../Controllers/AvisController.php';
 require_once '../Controllers/CollaborateursController.php';
 require_once '../Controllers/ServicesController.php';
-
-
+require_once '../Controllers/HabitatsController.php';
+require_once '../Controllers/RacesController.php';
+require_once '../Controllers/AnimalController.php';
+require_once '../Controllers/CompteRenduController.php';
+require_once '../Controllers/ConsommationsController.php';
 
 require_once '../Middleware/AuthMiddleware.php';
 
@@ -43,6 +46,10 @@ if (middleware_auth()) {
     $router->addRoute('GET', '/contacts_admin', 'PageController', 'contacts_admin');
     $router->addRoute('GET', '/roles_admin', 'PageController', 'roles_admin');
     $router->addRoute('GET', '/deconnexion', 'UserController', 'logout');
+    $router->addRoute('GET', '/races_admin', 'PageController', 'races_admin');
+    $router->addRoute('POST', '/compte_rendu_admin_filtre', 'PageController', 'compte_rendu_admin');
+    $router->addRoute('POST', '/consommation_animaux_admin_filtre', 'PageController', 'consommation_animaux_admin');
+
 
     if ($_SESSION['id_user_arcadia']['role_id'] === 1) {
         $router->addRoute('GET', '/collaborateurs_admin', 'PageController', 'collaborateurs_admin');
@@ -64,6 +71,26 @@ if (middleware_auth()) {
     $router->addRoute('POST', '/habitats_admin_update', 'HabitatsController', 'update');
     $router->addRoute('POST', '/habitats_admin_show', 'HabitatsController', 'show');
     $router->addRoute('POST', '/habitats_admin_delete', 'HabitatsController', 'delete');
+
+    $router->addRoute('POST', '/races_admin_insert', 'RacesController', 'insert');
+    $router->addRoute('POST', '/races_admin_update', 'RacesController', 'update');
+    $router->addRoute('POST', '/races_admin_show', 'RacesController', 'show');
+    $router->addRoute('POST', '/races_admin_delete', 'RacesController', 'delete');
+
+    $router->addRoute('POST', '/animaux_admin_insert', 'AnimalController', 'insert');
+    $router->addRoute('POST', '/animaux_admin_update', 'AnimalController', 'update');
+    $router->addRoute('POST', '/animaux_admin_show', 'AnimalController', 'show');
+    $router->addRoute('POST', '/animaux_admin_delete', 'AnimalController', 'delete');
+
+    $router->addRoute('POST', '/compte_rendu_admin_insert', 'CompteRenduController', 'insert');
+    $router->addRoute('POST', '/compte_rendu_admin_update', 'CompteRenduController', 'update');
+    $router->addRoute('POST', '/compte_rendu_admin_show', 'CompteRenduController', 'show');
+    $router->addRoute('POST', '/compte_rendu_admin_delete', 'CompteRenduController', 'delete');
+
+    $router->addRoute('POST', '/consommation_animaux_admin_insert', 'ConsommationsController', 'insert');
+    $router->addRoute('POST', '/consommation_animaux_admin_update', 'ConsommationsController', 'update');
+    $router->addRoute('POST', '/consommation_animaux_admin_show', 'ConsommationsController', 'show');
+    $router->addRoute('POST', '/consommation_animaux_admin_delete', 'ConsommationsController', 'delete');
 }
 
 // Appel de la fonction handleRoute pour gérer les routes

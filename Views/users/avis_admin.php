@@ -32,7 +32,7 @@ $avis = $avisController->index($filtre);
             <tbody>
                 <?php foreach ($avis as $aviss) : ?>
                     <tr>
-                        <td><?= $aviss['date_creation'] ?></td>
+                        <td><?= convertDate($aviss['date_creation'], false) ?></td>
 
                         <td><?= $aviss['nom'] ?></td>
                         <td class="text-center">
