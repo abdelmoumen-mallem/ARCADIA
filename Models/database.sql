@@ -113,7 +113,7 @@ INSERT INTO
     )
 VALUES (
         'abdelmoumen.mallem@gmail.com',
-        'Skanes',
+        '$2y$10$kQp5ghjp9.f9CpGT/J9QSeY1Y0svAnyM3WC9KnBjit5eQTbyXbEj6',
         'Garcia',
         'José',
         1

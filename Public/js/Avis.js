@@ -81,19 +81,21 @@ class Avis {
         if (visible == 1) {
           if (url == "avis") {
             rowAvis.textContent = "Visible";
+            rowAvis.classList.remove("text-bg-danger");
           } else {
             rowAvis.textContent = "Vu";
+            rowAvis.classList.remove("text-bg-warning");
           }
-          rowAvis.classList.remove("text-bg-danger");
           rowAvis.classList.add("text-bg-success");
         } else {
           if (url == "avis") {
             rowAvis.textContent = "Non-visible";
+            rowAvis.classList.add("text-bg-danger");
           } else {
             rowAvis.textContent = "Non-vu";
+            rowAvis.classList.add("text-bg-warning");
           }
           rowAvis.classList.remove("text-bg-success");
-          rowAvis.classList.add("text-bg-danger");
         }
       } else {
         console.error("Erreur lors de la requête :", xhr.statusText);
