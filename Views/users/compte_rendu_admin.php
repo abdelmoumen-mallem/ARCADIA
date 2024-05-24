@@ -20,13 +20,9 @@ require_once '../Controllers/CompteRenduController.php';
 $compteRendusController = new CompteRenduController();
 $compteRendus = $compteRendusController->index($filtre);
 
-
-
 require_once '../Controllers/AnimalController.php';
 $animalsController = new AnimalController();
 $animals = $animalsController->index();
-
-
 
 ?>
 
@@ -36,9 +32,12 @@ $animals = $animalsController->index();
             <div class="col-6">
                 <h2>Rapport vétérinaire</h2>
             </div>
-            <div class="col-6 text-end">
-                <div class="btn btn-primary" onclick="General.action('Creation','/compte_rendu_admin_insert','compte_rendu')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Ajouter un rapport <i class="bi bi-plus-square"></i></div>
-            </div>
+            <?php if ($_SESSION['id_user_arcadia']['role_id'] !== 1) { ?>
+
+                <div class="col-6 text-end">
+                    <div class="btn btn-primary" onclick="General.action('Creation','/compte_rendu_admin_insert','compte_rendu')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Ajouter un rapport <i class="bi bi-plus-square"></i></div>
+                </div>
+            <?php } ?>
         </div>
         <div class="row">
             <div class="col-6"></div>
@@ -49,7 +48,7 @@ $animals = $animalsController->index();
                             <select name="animalId" class="form-select mb-3" aria-label="animalId">
                                 <option selected value="">Choix de l'animal</option>
                                 <?php foreach ($animals as $animal) : ?>
-                                    <option value="<?= $animal['id'] ?>" <?= ($_POST['animalId'] ?? '') == $animal['id'] ? 'selected' : '' ?>><?= $animal['prenom'] ?></option>
+                                    <option value="<?= htmlspecialchars($animal['id']) ?>" <?= ($_POST['animalId'] ?? '') == $animal['id'] ? 'selected' : '' ?>><?= htmlspecialchars($animal['prenom']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -72,15 +71,18 @@ $animals = $animalsController->index();
                     <th scope="col">Nourriture</th>
                     <th scope="col">Grammage</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Collaborateur</th>
                     <th scope="col" class="text-center">Detail</th>
-                    <th scope="col" class="text-center">Modifier</th>
-                    <th scope="col" class="text-center">Supprimer</th>
+                    <?php if ($_SESSION['id_user_arcadia']['role_id'] !== 1) { ?>
+                        <th scope="col" class="text-center">Modifier</th>
+                        <th scope="col" class="text-center">Supprimer</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($compteRendus as $compteRendu) : ?>
                     <tr>
-                        <td><?= $compteRendu['prenom'] . ' (' . $compteRendu['nom'] . ')' ?></td>
+                        <td><?= htmlspecialchars($compteRendu['prenom']) . ' (' . htmlspecialchars($compteRendu['nom']) . ')' ?></td>
                         <td>
                             <?php if ($compteRendu['etat'] == 1) : ?>
                                 <div class="badge text-bg-success">Bon</div>
@@ -90,21 +92,27 @@ $animals = $animalsController->index();
                                 <div class="badge text-bg-danger">Mauvais</div>
                             <?php endif; ?>
                         </td>
-                        <td><?= $compteRendu['nouriture'] ?></td>
-                        <td><?= $compteRendu['grammage'] ?></td>
-                        <td><?= convertDate($compteRendu['date_creation'], false) ?></td>
+                        <td><?= htmlspecialchars($compteRendu['nouriture']) ?></td>
+                        <td><?= htmlspecialchars($compteRendu['grammage']) ?></td>
+                        <td><?= convertDate(htmlspecialchars($compteRendu['date_creation']), false) ?></td>
+                        <td><?= htmlspecialchars($compteRendu['nom_collaborateur']) ?></td>
+
 
                         <td class="text-center">
-                            <i class="bi bi-book btn btn-info" onclick="General.show('<?= addslashes(str_replace("\n", " ", $compteRendu['description'])) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-book btn btn-info" onclick="General.show('<?= htmlspecialchars(addslashes(str_replace(array("\n", '"', "'"), array(" ", '"', "'"), $compteRendu['description'])), ENT_QUOTES) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         </td>
 
-                        <td class="text-center">
-                            <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= $compteRendu['id'] ?> , '/compte_rendu_admin_show', 'compte_rendu')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                        <?php if ($_SESSION['id_user_arcadia']['role_id'] !== 1) { ?>
 
-                        </td>
-                        <td class="text-center">
-                            <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= $compteRendu['id'] ?> , '/compte_rendu_admin_delete', 'compte_rendu')"></i>
-                        </td>
+                            <td class="text-center">
+                                <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= htmlspecialchars($compteRendu['id']) ?> , '/compte_rendu_admin_show', 'compte_rendu')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+
+                            </td>
+                            <td class="text-center">
+                                <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= htmlspecialchars($compteRendu['id']) ?> , '/compte_rendu_admin_delete', 'compte_rendu')"></i>
+                            </td>
+
+                        <?php } ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -124,12 +132,14 @@ $animals = $animalsController->index();
 
                 <input type="hidden" id="id">
 
+                <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
+
                 <input type="hidden" id="utilisateur_id" value="<?= $_SESSION['id_user_arcadia']['id'] ?>">
 
                 <div class="form-floating">
                     <select name="animal_id" id="animal_id" class="form-select mb-3" aria-label="animal_id">
                         <?php foreach ($animals as $animal) : ?>
-                            <option value="<?= $animal['id'] ?>"><?= $animal['prenom'] ?></option>
+                            <option value="<?= htmlspecialchars($animal['id']) ?>"><?= htmlspecialchars($animal['prenom']) ?></option>
                         <?php endforeach; ?>
                     </select>
                     <label for="animal_id">Animal</label>

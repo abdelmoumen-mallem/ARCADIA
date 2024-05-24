@@ -25,6 +25,7 @@ class General {
     document.getElementById("validation").style.display = "none";
 
     var id = document.getElementById("id").value;
+    var csrf = document.getElementById("csrf").value;
 
     if (environnement === "compte_rendu") {
       var animal_id = document.getElementById("animal_id").value;
@@ -91,7 +92,9 @@ class General {
       "&nom=" +
       encodeURIComponent(nom) +
       "&role_id=" +
-      encodeURIComponent(role_id_value);
+      encodeURIComponent(role_id_value) +
+      "&csrf=" +
+      encodeURIComponent(csrf);
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -282,6 +285,18 @@ class General {
 
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        if (xhr.responseText == "false") {
+          alert(`Impossibilité de supprimer ${section}`);
+        } else {
+          window.location.reload();
+        }
+      } else {
+        console.error("Erreur lors de la requête :", xhr.statusText);
+      }
+    };
 
     xhr.send(params);
   }

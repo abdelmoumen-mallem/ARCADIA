@@ -32,9 +32,11 @@ $animals = $animalsController->index();
             <div class="col-6">
                 <h2>Consommations</h2>
             </div>
-            <div class="col-6 text-end">
-                <div class="btn btn-primary" onclick="General.action('Creation','/consommation_animaux_admin_insert','consommations')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Ajouter une consommation <i class="bi bi-plus-square"></i></div>
-            </div>
+            <?php if ($_SESSION['id_user_arcadia']['role_id'] !== 1) { ?>
+                <div class="col-6 text-end">
+                    <div class="btn btn-primary" onclick="General.action('Creation','/consommation_animaux_admin_insert','consommations')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Ajouter une consommation <i class="bi bi-plus-square"></i></div>
+                </div>
+            <?php } ?>
         </div>
         <div class="row">
             <div class="col-6"></div>
@@ -45,12 +47,12 @@ $animals = $animalsController->index();
                             <select name="animalId" class="form-select mb-3" aria-label="animalId">
                                 <option selected value="">Choix de l'animal</option>
                                 <?php foreach ($animals as $animal) : ?>
-                                    <option value="<?= $animal['id'] ?>"><?= $animal['prenom'] ?></option>
+                                    <option value="<?= htmlspecialchars($animal['id']) ?>" <?= ($_POST['animalId'] ?? '') == $animal['id'] ? 'selected' : '' ?>><?= htmlspecialchars($animal['prenom']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="col">
-                            <input type="date" name="date" class="form-control">
+                            <input type="date" name="date" value="<?= $_POST['date'] ?? '' ?>" class="form-control">
                         </div>
                         <div class="col">
                             <input type="submit" name="submit" class="btn btn-success">
@@ -66,25 +68,32 @@ $animals = $animalsController->index();
                     <th scope="col">Nourriture</th>
                     <th scope="col">Grammage</th>
                     <th scope="col">Date</th>
-                    <th scope="col" class="text-center">Modifier</th>
-                    <th scope="col" class="text-center">Supprimer</th>
+                    <th scope="col">Collaborateur</th>
+                    <?php if ($_SESSION['id_user_arcadia']['role_id'] !== 1) { ?>
+                        <th scope="col" class="text-center">Modifier</th>
+                        <th scope="col" class="text-center">Supprimer</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($consommations as $consommation) : ?>
                     <tr>
-                        <td><?= $consommation['prenom'] . ' (' . $consommation['nom'] . ')' ?></td>
-                        <td><?= $consommation['nouriture'] ?></td>
-                        <td><?= $consommation['grammage'] ?></td>
-                        <td><?= convertDate($consommation['date_creation'], true) ?></td>
+                        <td><?= htmlspecialchars($consommation['prenom']) . ' (' . htmlspecialchars($consommation['nom']) . ')' ?></td>
+                        <td><?= htmlspecialchars($consommation['nouriture']) ?></td>
+                        <td><?= htmlspecialchars($consommation['grammage']) ?></td>
+                        <td><?= convertDate(htmlspecialchars($consommation['date_creation']), true) ?></td>
+                        <td><?= htmlspecialchars($consommation['nom_collaborateur']) ?></td>
 
-                        <td class="text-center">
-                            <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= $consommation['id'] ?> , '/consommation_animaux_admin_show', 'consommations')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                        <?php if ($_SESSION['id_user_arcadia']['role_id'] !== 1) { ?>
+                            <td class="text-center">
+                                <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= htmlspecialchars($consommation['id']) ?> , '/consommation_animaux_admin_show', 'consommations')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
 
-                        </td>
-                        <td class="text-center">
-                            <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= $consommation['id'] ?> , '/consommation_animaux_admin_delete', 'consommations')"></i>
-                        </td>
+                            </td>
+                            <td class="text-center">
+                                <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= htmlspecialchars($consommation['id']) ?> , '/consommation_animaux_admin_delete', 'consommations')"></i>
+                            </td>
+
+                        <?php } ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -104,12 +113,14 @@ $animals = $animalsController->index();
 
                 <input type="hidden" id="id">
 
+                <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
+
                 <input type="hidden" id="utilisateur_id" value="<?= $_SESSION['id_user_arcadia']['id'] ?>">
 
                 <div class="form-floating">
                     <select name="animal_id" id="animal_id" class="form-select mb-3" aria-label="animal_id">
                         <?php foreach ($animals as $animal) : ?>
-                            <option value="<?= $animal['id'] ?>"><?= $animal['prenom'] ?></option>
+                            <option value="<?= htmlspecialchars($animal['id']) ?>"><?= htmlspecialchars($animal['prenom']) ?></option>
                         <?php endforeach; ?>
                     </select>
                     <label for="animal_id">Animal</label>

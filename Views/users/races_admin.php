@@ -31,13 +31,12 @@ $races = $racesController->index();
                 <?php foreach ($races as $race) : ?>
                     <tr>
                         <td><?= $race['nom'] ?></td>
-
                         <td class="text-center">
-                            <i class="bi bi-pencil btn btn-warning" onclick="Services.fetchServices(<?= $race['id'] ?> , '/races_admin_show','races')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-pencil btn btn-warning" onclick="Services.fetchServices(<?= htmlspecialchars($race['id']) ?> , '/races_admin_show','races')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
 
                         </td>
                         <td class="text-center">
-                            <i class="bi bi-trash3 btn btn-danger" onclick="Services.deleteServices(<?= $race['id'] ?> , '/races_admin_delete','races')"></i>
+                            <i class="bi bi-trash3 btn btn-danger" onclick="Services.deleteServices(<?= htmlspecialchars($race['id']) ?> , '/races_admin_delete','races')"></i>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -57,7 +56,10 @@ $races = $racesController->index();
             <div class="modal-body" id="modalBody">
 
                 <input type="hidden" id="id_service">
+
                 <input type="hidden" id="image_url">
+
+                <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nom" placeholder="Nom">

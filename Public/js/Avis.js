@@ -2,6 +2,7 @@ class Avis {
   static insert(url) {
     var nom = document.getElementById("nom").value;
     var description = document.getElementById("description").value.trim();
+
     var msg = document.getElementById("msg");
 
     var note = document
@@ -57,25 +58,40 @@ class Avis {
 
     var visibleValue = visible ? 1 : 0;
 
+    var csrf = document.getElementById("csrf").value;
+
     var xhr = new XMLHttpRequest();
     var params =
       "id=" +
       encodeURIComponent(id) +
       "&visible=" +
-      encodeURIComponent(visibleValue);
+      encodeURIComponent(visibleValue) +
+      "&csrf=" +
+      encodeURIComponent(csrf);
 
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
+        if (xhr.responseText == "false") {
+          window.location.href = "/error";
+        }
         var rowAvis = document.getElementById("avis_" + id);
         if (visible == 1) {
-          rowAvis.textContent = "Visible";
+          if (url == "avis") {
+            rowAvis.textContent = "Visible";
+          } else {
+            rowAvis.textContent = "Vu";
+          }
           rowAvis.classList.remove("text-bg-danger");
           rowAvis.classList.add("text-bg-success");
         } else {
-          rowAvis.textContent = "Non-visible";
+          if (url == "avis") {
+            rowAvis.textContent = "Non-visible";
+          } else {
+            rowAvis.textContent = "Non-vu";
+          }
           rowAvis.classList.remove("text-bg-success");
           rowAvis.classList.add("text-bg-danger");
         }
@@ -102,5 +118,26 @@ class Avis {
 
     var validationBtn = document.getElementById("validation");
     validationBtn.setAttribute("data-action", note + 1);
+  }
+
+  static showAnimal(id, url, type, action) {
+    console.log(action);
+    var xhr = new XMLHttpRequest();
+    var params =
+      "id=" + encodeURIComponent(id) + "&type=" + encodeURIComponent(type);
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        if (action === "show") {
+          document.getElementById("description").innerHTML = xhr.responseText;
+        } else {
+          document.getElementById("animal_" + id).disabled = "true";
+        }
+      }
+    };
+
+    xhr.send(params);
   }
 }

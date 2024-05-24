@@ -101,4 +101,9 @@ class PageController
     {
         require_once '../Views/users/races_admin.php';
     }
+
+    public function animaux_liste()
+    {
+        require_once '../Views/pages/templateHabitat.php';
+    }
 }

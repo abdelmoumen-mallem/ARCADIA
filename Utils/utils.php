@@ -9,7 +9,11 @@ function isActive($uri)
 
 function decodeId($id, $time)
 {
-    $decode = $id / $time;
+    if ($id > $time) {
+        $decode = $id / $time;
+    } else {
+        $decode = $time / $id;
+    }
     return $decode;
 }
 
@@ -32,5 +36,38 @@ function convertDate($date, $time)
         return $date->format('d/m/Y H:i:s');
     } else {
         return $date->format('d/m/Y');
+    }
+}
+
+function encodeTokenCsrf()
+{
+    $sessionUser = $_SESSION['user_arcadia'];
+    $cookieUser = $_COOKIE['user_arcadia'];
+    if (!empty($cookieUser) && !empty($sessionUser) && $sessionUser == $cookieUser) {
+        $attribut = substr($sessionUser, 0, 2);
+        return base64_encode($sessionUser) . $attribut;
+    } else {
+        return false;
+    }
+}
+
+function decodeTokenCsrf($token)
+{
+    $tokenAttribut = substr($token, 0, -2);
+    return base64_decode($tokenAttribut);
+}
+
+function block($csrf)
+{
+    $sessionUser = $_SESSION['user_arcadia'];
+    $cookieUser = $_COOKIE['user_arcadia'];
+    if (!empty($cookieUser) && !empty($sessionUser) && $sessionUser == $cookieUser) {
+        if ($csrf == $_SESSION['user_arcadia']) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
     }
 }

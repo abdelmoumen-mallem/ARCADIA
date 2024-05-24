@@ -21,7 +21,16 @@ class HabitatsController
     public function insert()
     {
 
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
+
         $description = $_POST['description'];
+
         $nom = $_POST['nom'];
 
         if (empty($description) || empty($nom)) {
@@ -79,7 +88,18 @@ class HabitatsController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
+        $commentaire = $_POST['commentaire'];
+
         $description = $_POST['description'];
+
         $nom = $_POST['nom'];
         $id = $_POST['id_service'];
         $image_url = $_POST['image_url'];
@@ -98,7 +118,7 @@ class HabitatsController
 
         if (!isset($_FILES["formFile"])) {
 
-            $services = $this->habitatsModel->update($id, $nom, $description, $image_url);
+            $services = $this->habitatsModel->update($id, $nom, $description, $image_url, $commentaire);
 
             echo json_encode($services);
         } else {
@@ -125,7 +145,7 @@ class HabitatsController
 
                 if (move_uploaded_file($_FILES["formFile"]["tmp_name"], $filePath)) {
 
-                    $services = $this->habitatsModel->update($id, $nom, $description, $fileName);
+                    $services = $this->habitatsModel->update($id, $nom, $description, $fileName, $commentaire);
 
                     echo json_encode($services);
                 } else {

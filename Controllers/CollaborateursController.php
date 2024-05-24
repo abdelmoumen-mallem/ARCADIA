@@ -31,12 +31,24 @@ class CollaborateursController
 
     public function update()
     {
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $id = $_POST['id'];
         $username = $_POST['username'];
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
         $statut = isset($_POST['statut']) ? $_POST['statut'] : 0;
         $role_id = $_POST['role_id'];
+
+        if ($statut == 0 && $id == 1) {
+            echo json_encode(false);
+            exit;
+        }
 
         if (empty($nom) || empty($prenom) || empty($username) || empty($role_id)) {
             echo json_encode(2);
@@ -62,6 +74,13 @@ class CollaborateursController
 
     public function insert()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
         $username = $_POST['username'];
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
@@ -89,7 +108,7 @@ class CollaborateursController
 
         if ($collaborateurInfo) {
 
-            $to = 'abdelmoumen.mallem@gmail.com';
+            $to = $username;
             $subject = 'Votre mot de passe utlisateur ARCADIA.';
 
             $template = '../Views/pages/lienPassword.php';
@@ -161,7 +180,7 @@ class CollaborateursController
         $prenom = $_POST['prenom'];
         $username = $_POST['username'];
 
-        $to = 'abdelmoumen.mallem@gmail.com';
+        $to = $username;
         $subject = 'Votre mot de passe utlisateur ARCADIA.';
 
         $template = '../Views/pages/lienPassword.php';

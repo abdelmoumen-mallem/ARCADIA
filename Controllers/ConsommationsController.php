@@ -25,6 +25,14 @@ class ConsommationsController
 
     public function insert()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $animal_id = $_POST['animal_id'];
         $nouriture = $_POST['nouriture'];
         $grammage = $_POST['grammage'];
@@ -49,6 +57,14 @@ class ConsommationsController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $id = $_POST['id'];
         $animal_id = $_POST['animal_id'];
         $nouriture = $_POST['nouriture'];

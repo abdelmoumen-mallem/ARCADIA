@@ -21,6 +21,13 @@ class ServicesController
     public function insert()
     {
 
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $description = $_POST['description'];
         $nom = $_POST['nom'];
 
@@ -79,6 +86,15 @@ class ServicesController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
+
         $description = $_POST['description'];
         $nom = $_POST['nom'];
         $id = $_POST['id_service'];

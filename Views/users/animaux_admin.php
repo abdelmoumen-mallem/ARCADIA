@@ -14,6 +14,7 @@ require_once '../Controllers/HabitatsController.php';
 $habitatsController = new HabitatsController();
 $habitats = $habitatsController->index();
 
+
 ?>
 
 <div id="content">
@@ -41,7 +42,7 @@ $habitats = $habitatsController->index();
             <tbody>
                 <?php foreach ($animals as $animal) : ?>
                     <tr>
-                        <td><?= $animal['prenom'] ?></td>
+                        <td><?= htmlspecialchars($animal['prenom']) ?></td>
                         <td>
                             <?php if ($animal['statut'] == 1) : ?>
                                 <div class="badge text-bg-success">Activé</div>
@@ -49,15 +50,15 @@ $habitats = $habitatsController->index();
                                 <div class="badge text-bg-danger">Désactivé</div>
                             <?php endif; ?>
                         </td>
-                        <td><?= $animal['race_nom'] ?></td>
-                        <td><?= $animal['habitat_nom'] ?></td>
-                        <td><?= convertDate($animal['date_creation'], false) ?></td>
+                        <td><?= htmlspecialchars($animal['race_nom']) ?></td>
+                        <td><?= htmlspecialchars($animal['habitat_nom']) ?></td>
+                        <td><?= convertDate(htmlspecialchars($animal['date_creation']), false) ?></td>
                         <td class="text-center">
-                            <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= $animal['id'] ?> , '/animaux_admin_show','animaux')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= htmlspecialchars($animal['id']) ?> , '/animaux_admin_show','animaux')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
 
                         </td>
                         <td class="text-center">
-                            <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= $animal['id'] ?> , '/animaux_admin_delete','animaux')"></i>
+                            <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= htmlspecialchars($animal['id']) ?> , '/animaux_admin_delete','animaux')"></i>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -78,6 +79,9 @@ $habitats = $habitatsController->index();
 
                 <input type="hidden" id="id">
 
+                <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
+
+
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="prenom" placeholder="Prenom">
                     <label for="prenom">Prenom</label>
@@ -86,7 +90,7 @@ $habitats = $habitatsController->index();
                 <div class="form-floating">
                     <select name="race" id="race" class="form-select mb-3" aria-label="race">
                         <?php foreach ($races as $race) : ?>
-                            <option value="<?= $race['id'] ?>"><?= $race['nom'] ?></option>
+                            <option value="<?= htmlspecialchars($race['id']) ?>"><?= htmlspecialchars($race['nom']) ?></option>
                         <?php endforeach; ?>
                     </select>
                     <label for="race">Race</label>
@@ -95,7 +99,7 @@ $habitats = $habitatsController->index();
                 <div class="form-floating">
                     <select name="habitat" id="habitat" class="form-select mb-3" aria-label="habitat">
                         <?php foreach ($habitats as $habitat) : ?>
-                            <option value="<?= $habitat['id'] ?>"><?= $habitat['nom'] ?></option>
+                            <option value="<?= htmlspecialchars($habitat['id']) ?>"><?= htmlspecialchars($habitat['nom']) ?></option>
                         <?php endforeach; ?>
                     </select>
                     <label for="habitat">Habitat</label>

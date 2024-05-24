@@ -42,9 +42,9 @@ $roles = $rolesController->index($filtre);
         <tbody>
             <?php foreach ($collaborateurs as $collaborateur) : ?>
                 <tr>
-                    <td><?= $collaborateur['username'] ?></td>
-                    <td><?= $collaborateur['nom'] ?></td>
-                    <td><?= $collaborateur['prenom'] ?></td>
+                    <td><?= htmlspecialchars($collaborateur['username']) ?></td>
+                    <td><?= htmlspecialchars($collaborateur['nom']) ?></td>
+                    <td><?= htmlspecialchars($collaborateur['prenom']) ?></td>
                     <td>
                         <?php if ($collaborateur['statut'] == 1) : ?>
                             <div class="badge text-bg-success">Activé</div>
@@ -52,26 +52,18 @@ $roles = $rolesController->index($filtre);
                             <div class="badge text-bg-danger">Désactivé</div>
                         <?php endif; ?>
                     </td>
-                    <td><?= $collaborateur['role_nom'] ?></td>
-                    <td><?= convertDate($collaborateur['date_creation'], false) ?></td>
+                    <td><?= htmlspecialchars($collaborateur['role_nom']) ?></td>
+                    <td><?= convertDate(htmlspecialchars($collaborateur['date_creation']), false) ?></td>
                     <td class="text-center">
-                        <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
-                            <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= $collaborateur['id'] ?> , '/collaborateurs_admin','collaborateurs')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
-                        <?php } ?>
-
+                        <i class="bi bi-pencil btn btn-warning" onclick="General.fetch(<?= htmlspecialchars($collaborateur['id']) ?> , '/collaborateurs_admin','collaborateurs')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                     </td>
                     <td class="text-center">
-                        <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
-                            <?php if ($_SESSION['id_user_arcadia']['id'] !== 1 || $_SESSION['id_user_arcadia']['id'] !== $collaborateur['id']) { ?>
-                                <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= $collaborateur['id'] ?> , '/collaborateurs_admin_delete', 'collaborateurs')"></i>
-                            <?php } ?>
+                        <?php if ($collaborateur['id'] !== $_SESSION['id_user_arcadia']['role_id']) { ?>
+                            <i class="bi bi-trash3 btn btn-danger" onclick="General.delete(<?= htmlspecialchars($collaborateur['id']) ?> , '/collaborateurs_admin_delete', 'collaborateurs')"></i>
                         <?php } ?>
                     </td>
                     <td class="text-center">
-                        <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
-                            <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="General.passwordCollaborateurs(<?= $collaborateur['id'] ?>,'<?= $collaborateur['username'] ?>', '<?= $collaborateur['nom'] ?>', '<?= $collaborateur['prenom'] ?>', '/collaborateurs_admin_mail')"></i>
-                        <?php } ?>
-
+                        <i class="bi bi-envelope-check btn btn-info" title="Envoi de mail de modification de password" onclick="General.passwordCollaborateurs(<?= htmlspecialchars($collaborateur['id']) ?>,'<?= htmlspecialchars($collaborateur['username']) ?>', '<?= htmlspecialchars($collaborateur['nom']) ?>', '<?= htmlspecialchars($collaborateur['prenom']) ?>', '/collaborateurs_admin_mail')"></i>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -92,6 +84,8 @@ $roles = $rolesController->index($filtre);
 
                 <input type="hidden" id="id">
 
+                <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
+
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="username" placeholder="Email">
                     <label for="username">Email</label>
@@ -108,10 +102,9 @@ $roles = $rolesController->index($filtre);
                 </div>
                 <select name="role" id="role_id" class="form-select mb-3 d-none" aria-label="role">
                     <?php foreach ($roles as $role) : ?>
-                        <option value="<?= $role['id'] ?>"><?= $role['nom'] ?></option>
+                        <option value="<?= htmlspecialchars($role['id']) ?>"><?= htmlspecialchars($role['nom']) ?></option>
                     <?php endforeach; ?>
                 </select>
-
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="statut">

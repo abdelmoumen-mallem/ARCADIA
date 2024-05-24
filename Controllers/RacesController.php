@@ -20,6 +20,14 @@ class RacesController
 
     public function insert()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $nom = $_POST['nom'];
 
         if (empty($nom)) {
@@ -75,6 +83,14 @@ class RacesController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $nom = $_POST['nom'];
         $id = $_POST['id_service'];
         $image_url = $_POST['image_url'];

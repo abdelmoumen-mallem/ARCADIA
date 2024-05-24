@@ -25,6 +25,14 @@ class CompteRenduController
 
     public function insert()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $animal_id = $_POST['animal_id'];
         $etat = $_POST['etat'];
         $nouriture = $_POST['nouriture'];
@@ -51,6 +59,14 @@ class CompteRenduController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $id = $_POST['id'];
         $animal_id = $_POST['animal_id'];
         $etat = $_POST['etat'];

@@ -1,13 +1,18 @@
 class Services {
   static insertServices(url, navigation) {
-    console.log(navigation);
     var nom = document.getElementById("nom").value;
     if (navigation !== "races") {
       var description = document.getElementById("description").value.trim();
     }
+
+    if (navigation === "habitats") {
+      var commentaire = document.getElementById("commentaire").value.trim();
+    }
+
     var formfile = document.getElementById("formFile").files[0];
     var id_service = document.getElementById("id_service").value;
     var image_url = document.getElementById("image_url").value;
+    var csrf = document.getElementById("csrf").value;
 
     var msg = document.getElementById("msg");
 
@@ -26,9 +31,15 @@ class Services {
     if (navigation !== "races") {
       formData.append("description", description);
     }
+
+    if (navigation === "habitats") {
+      formData.append("commentaire", commentaire);
+    }
+
     formData.append("formFile", formfile);
     formData.append("id_service", id_service);
     formData.append("image_url", image_url);
+    formData.append("csrf", csrf);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -124,6 +135,22 @@ class Services {
           document.getElementById("description").value =
             serviceData.description;
         }
+
+        if (navigation == "habitats") {
+          document.getElementById("commentaire").value =
+            serviceData.commentaire;
+          document.querySelector(
+            'label[for="commentaire"]'
+          ).textContent = `Commentaire : ${serviceData.nom}`;
+
+          var id_collaborateur =
+            document.getElementById("id_collaborateur").value;
+          var habitat_admin = document.getElementById("habitat_admin");
+          if (id_collaborateur == 3) {
+            habitat_admin.classList.add("d-none");
+          }
+        }
+
         document.getElementById("id_service").value = serviceData.id;
         document.getElementById("image_url").value = serviceData.image_url;
 
@@ -148,7 +175,7 @@ class Services {
     } else if (navigation === "habitats") {
       section = "cet habitat";
     } else if (navigation === "races") {
-      section = "cet race";
+      section = "cette race";
     }
 
     if (!confirm(`Êtes-vous sûr de vouloir supprimer ${section} ?`)) {
@@ -161,7 +188,11 @@ class Services {
 
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        window.location.reload();
+        if (xhr.responseText == "false") {
+          alert(`Impossibilité de supprimer ${section}`);
+        } else {
+          window.location.reload();
+        }
       } else {
         console.error("Erreur lors de la requête :", xhr.statusText);
       }

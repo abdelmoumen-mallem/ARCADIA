@@ -17,6 +17,12 @@ class AvisModel extends DatabaseModel
         return $this->indexGeneral($this->table . " " . $filtre);
     }
 
+    public function indexB($filtre)
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM $this->table $filtre");
+        return $stmt->fetchColumn();
+    }
+
     // Insertion des nouveaux avis
     public function insert($nom, $description, $note)
     {

@@ -34,15 +34,15 @@ $services = $servicesController->index();
                         <td><?= $service['nom'] ?></td>
 
                         <td class="text-center">
-                            <i class="bi bi-book btn btn-info" onclick="Services.show('<?= addslashes(str_replace("\n", " ", $service['description'])) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-book btn btn-info" onclick="Services.show('<?= htmlspecialchars(addslashes(str_replace(array("\n", '"', "'"), array(" ", '"', "'"), $service['description'])), ENT_QUOTES) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         </td>
 
                         <td class="text-center">
-                            <i class="bi bi-pencil btn btn-warning" onclick="Services.fetchServices(<?= $service['id'] ?> , '/services_admin_show','services')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-pencil btn btn-warning" onclick="Services.fetchServices(<?= htmlspecialchars($service['id']) ?> , '/services_admin_show','services')" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
 
                         </td>
                         <td class="text-center">
-                            <i class="bi bi-trash3 btn btn-danger" onclick="Services.deleteServices(<?= $service['id'] ?> , '/services_admin_delete','services')"></i>
+                            <i class="bi bi-trash3 btn btn-danger" onclick="Services.deleteServices(<?= htmlspecialchars($service['id']) ?> , '/services_admin_delete','services')"></i>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -62,7 +62,10 @@ $services = $servicesController->index();
             <div class="modal-body" id="modalBody">
 
                 <input type="hidden" id="id_service">
+
                 <input type="hidden" id="image_url">
+
+                <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nom" placeholder="Nom">

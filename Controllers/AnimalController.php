@@ -5,6 +5,7 @@ require_once '../Models/AnimalModel.php';
 class AnimalController
 {
     private $animalModel;
+    private $statistiquesModel;
 
     public function __construct()
     {
@@ -21,15 +22,33 @@ class AnimalController
         return $this->animalModel->indexB($id);
     }
 
+    public function indexC()
+    {
+        $id = $_POST['id'];
+        return $this->animalModel->indexC($id);
+    }
+
+    public function indexD($filtre)
+    {
+        return $this->animalModel->indexD($filtre);
+    }
+
     public function show()
     {
         $id = $_POST['id'];
-        $collaborateurInfo = $this->animalModel->show($id);
-        echo json_encode($collaborateurInfo);
+        $animal = $this->animalModel->show($id);
+        echo json_encode($animal);
     }
 
     public function insert()
     {
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $prenom = $_POST['prenom'];
         $statut = isset($_POST['statut']) ? $_POST['statut'] : 0;
         $habitat_id = $_POST['habitat'];
@@ -54,6 +73,13 @@ class AnimalController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
 
         $prenom = $_POST['prenom'];
         $statut = isset($_POST['statut']) ? $_POST['statut'] : 0;

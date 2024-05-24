@@ -21,9 +21,9 @@ class HabitatsModel extends DatabaseModel
         return $this->insertGeneral($this->table, compact('nom', 'description', 'image_url'));
     }
 
-    public function update($id, $nom, $description, $image_url)
+    public function update($id, $nom, $description, $image_url, $commentaire)
     {
-        return $this->updateGeneral($this->table, $id, compact('nom', 'description', 'image_url'));
+        return $this->updateGeneral($this->table, $id, compact('nom', 'description', 'image_url', 'commentaire'));
     }
 
     // Verifie unicité du nom de service

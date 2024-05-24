@@ -18,6 +18,11 @@ class AvisController
         return $this->avisModel->index(secureQuery($filtre));
     }
 
+    public function indexB($filtre)
+    {
+        return $this->avisModel->indexB($filtre);
+    }
+
     public function insert()
     {
         $description = $_POST['description'];
@@ -39,6 +44,14 @@ class AvisController
 
     public function update()
     {
+
+        $token = $_POST['csrf'];
+        $csrf = decodeTokenCsrf($token);
+        if (!block($csrf)) {
+            echo json_encode(false);
+            exit;
+        }
+
         $id = $_POST['id'];
         $visible = $_POST['visible'];
 

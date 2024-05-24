@@ -37,7 +37,7 @@ require_once '../Utils/utils.php';
 
 
                 <div class="d-flex ms-auto" title="Déconnexion">
-                    <div class="rounded-bottom-1 bg-primary text-white px-2 py-1" onclick="General.logout();"><?= $_SESSION['id_user_arcadia']['prenom'] ?> <i class="bi bi-box-arrow-in-right"></i></div>
+                    <div class="rounded-bottom-1 bg-primary text-white px-2 py-1 p" style="cursor: pointer;" onclick="General.logout();"><?= $_SESSION['id_user_arcadia']['prenom'] ?> <i class="bi bi-box-arrow-in-right"></i></div>
                 </div>
             </div>
         </div>
@@ -54,41 +54,49 @@ require_once '../Utils/utils.php';
                     <li class="nav-item">
                         <a class="nav-link <?php echo isActive('/accueil_admin') ?>" href="/accueil_admin">Accueil</a>
                     </li>
+
                     <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1) { ?>
                         <li class="nav-item">
                             <a class="nav-link <?php echo isActive('/collaborateurs_admin') ?>" href="/collaborateurs_admin">Collaborateurs</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/services_admin') ?>" href="/services_admin">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/animaux_admin') ?>" href="/animaux_admin">Animaux</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/horaires_admin') ?>" href="/horaires_admin">Horaires</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/contacts_admin') ?>" href="/contacts_admin">Contacts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/races_admin') ?>" href="/races_admin">Races</a>
+                        </li>
                     <?php } ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/services_admin') ?>" href="/services_admin">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/habitats_admin') ?>" href="/habitats_admin">Habitats</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/animaux_admin') ?>" href="/animaux_admin">Animaux</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/horaires_admin') ?>" href="/horaires_admin">Horaires</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/compte_rendu_admin') ?>" href="/compte_rendu_admin">Comptes rendus</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/consommation_animaux_admin') ?>" href="/consommation_animaux_admin">Consommations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/avis_admin') ?>" href="/avis_admin">Avis</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/contacts_admin') ?>" href="/contacts_admin">Contacts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/roles_admin') ?>" href="/roles_admin">Roles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isActive('/races_admin') ?>" href="/races_admin">Races</a>
-                    </li>
+
+                    <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1 || $_SESSION['id_user_arcadia']['role_id'] === 3) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/compte_rendu_admin') ?>" href="/compte_rendu_admin">Comptes rendus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/habitats_admin') ?>" href="/habitats_admin">Habitats</a>
+                        </li>
+                    <?php } ?>
+
+                    <?php if ($_SESSION['id_user_arcadia']['role_id'] === 1 || $_SESSION['id_user_arcadia']['role_id'] === 2) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/consommation_animaux_admin') ?>" href="/consommation_animaux_admin">Consommations</a>
+                        </li>
+                    <?php } ?>
+
+                    <?php if ($_SESSION['id_user_arcadia']['role_id'] === 2) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isActive('/avis_admin') ?>" href="/avis_admin">Avis</a>
+                        </li>
+                    <?php } ?>
+
                 </ul>
             </div>
         </div>

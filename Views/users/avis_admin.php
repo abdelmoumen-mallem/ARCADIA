@@ -32,28 +32,30 @@ $avis = $avisController->index($filtre);
             <tbody>
                 <?php foreach ($avis as $aviss) : ?>
                     <tr>
-                        <td><?= convertDate($aviss['date_creation'], false) ?></td>
+                        <td><?= convertDate(htmlspecialchars($aviss['date_creation']), false) ?></td>
 
-                        <td><?= $aviss['nom'] ?></td>
+                        <td><?= htmlspecialchars($aviss['nom']) ?></td>
                         <td class="text-center">
-                            <i class="bi bi-pencil btn btn-info" onclick="Avis.show('<?= addslashes(str_replace("\n", " ", $aviss['description'])) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
+                            <i class="bi bi-book btn btn-info" onclick="Avis.show('<?= htmlspecialchars(addslashes(str_replace(array("\n", '"', "'"), array(" ", '"', "'"), $aviss['description'])), ENT_QUOTES) ?>')" title="Voir la description en detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"></i>
                         </td>
                         <td class="text-center"><?= $aviss['note'] ?></td>
                         <td>
-                            <?php if ($aviss['visible'] == 1) : ?>
-                                <div id="avis_<?= $aviss['id'] ?>" class="badge text-bg-success">Visible</div>
+                            <?php if (htmlspecialchars($aviss['visible']) == 1) : ?>
+                                <div id="avis_<?= htmlspecialchars($aviss['id']) ?>" class="badge text-bg-success">Visible</div>
                             <?php else : ?>
-                                <div id="avis_<?= $aviss['id'] ?>" class="badge text-bg-danger">Non-visible</div>
+                                <div id="avis_<?= htmlspecialchars($aviss['id']) ?>" class="badge text-bg-danger">Non-visible</div>
                             <?php endif; ?>
                         </td>
                         <td class="text-center">
-                            <input id="visible_<?= $aviss['id'] ?>" class="form-check-input" type="checkbox" <?= $aviss['visible'] == 1 ? 'checked' : '' ?> onclick="Avis.update('<?= $aviss['id'] ?>', this.checked, '/visibleAvis', '/avis_admin')" value="" id="flexCheckDefault">
+                            <input id="visible_<?= htmlspecialchars($aviss['id']) ?>" class="form-check-input" type="checkbox" <?= $aviss['visible'] == 1 ? 'checked' : '' ?> onclick="Avis.update('<?= htmlspecialchars($aviss['id']) ?>', this.checked, '/visibleAvis', '/avis_admin','avis')" value="" id="flexCheckDefault">
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+
+    <input type="hidden" id="csrf" value="<?= encodeTokenCsrf() ?>">
 
     <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop1Label1" aria-hidden="true">
         <div class="modal-dialog">
